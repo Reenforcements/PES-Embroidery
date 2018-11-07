@@ -17,5 +17,5 @@ if paths is None or attributes is None:
 
 # Enumerate the shapes in the SVG to find where stitches should go.
 for shape in paths:
-
+    stitchLines = makeStitchLines(shape)
     print(shape)
