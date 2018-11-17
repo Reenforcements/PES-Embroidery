@@ -3,6 +3,7 @@ import sys
 from svgFunctions import *
 import pyembroidery
 from utilities import *
+from PES import *
 
 
 parser = argparse.ArgumentParser(description="Converts an SVG file into a PES embroidery file.")
@@ -24,10 +25,13 @@ for shape in paths:
     stitchLines = makeStitchLines(shape)
     print(shape)
 
+pes = PES()
+pes.encode()
+
 if args.debug:
-    pes = pyembroidery.read(args.outputFile)
-    if pes is not None:
+    loadedPES = pyembroidery.read(args.outputFile)
+    if loadedPES is not None:
         print("Generating debug image.")
-        pyembroidery.write_png(pes, replaceFilenameAndExtensionFromPath(args.inputFile, "debugPicture", "png"))
+        pyembroidery.write_png(loadedPES, replaceFilenameAndExtensionFromPath(args.inputFile, "debugPicture", "png"))
     else:
         print("Couldn't find output file.")
