@@ -62,6 +62,8 @@ class PES:
 class PEC:
     def __init__(self):
         self.label = "default"
+        self.numberOfColors = 1
+        self.stitches = []
 
 
     def encode(self, b):
@@ -76,6 +78,51 @@ class PEC:
 
         b.extend(0x00)
         b.extend(0xFF)
+
+        # Thumbnail width and height
+        b.extend(6)
+        b.extend(38)
+
+        b.extend([0x20, 0x20, 0x20, 0x20, 0x64, 0x20, 0x00, 0x20, 0x00, 0x20, 0x20, 0x20])
+
+        # Number of colors - 1
+        b.extend((self.numberOfColors - 1) & 0xFF)
+        #TEMP, assign color palette indices
+        for i in self.numberOfColors:
+            b.extend(i & 0xFF)
+        # Palette section padding?
+        b.extend([0x20] *  (462 - self.numberOfColors))
+
+        # Second section of PEC header
+
+        b.extend([0x00, 0x00])
+
+        # Offset to image thumbnail relative to the beginning of the second section
+        # Set to zero for now because we don't know how many stitches we have yet.
+        b.extend([0x00, 0x00])
+
+        b.extend([0x31, 0x00])
+        b.extend([0xF0, 0xFF])
+
+        # Width and height
+        # TEMP values
+        b.extend([0x0A, 0x0A])
+        b.extend([0x0A, 0x0A])
+
+        b.extend([0x01, 0xE0])
+        b.extend([0x01, 0xB0])
+
+        b.extend([0x00] * 4)
+
+        for stitch in self.stitches:
+            stitch.encode(b)
+
+        # End of stitch list
+        b.extend(0xFF)
+
+
+
+
 
 class CEmbOne:
     def __init__(self):
@@ -99,6 +146,8 @@ class CSewSeg:
         None
 
 class Stitch:
+    TYPE_JUMP = 0
+    TYPE_
     def __init__(self, start, end):
         if type(start) != complex:
             raise Exception("Stitch - start point not a point object.")
@@ -108,3 +157,6 @@ class Stitch:
 
         self.start = start
         self.end = end
+
+    def encode(self, b):
+        None
