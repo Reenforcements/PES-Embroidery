@@ -69,18 +69,39 @@ class Global:
             peek = f.read(1)
             f.seek(f.tell() - 1)
             if peek is None:
-                break
+                return "End"
+
+            if peek == 0xFF:
+                print("End stitches")
+                return "End"
 
             peekByte = struct.unpack("B", peek)[0]
             if (peekByte & 0x80) > 0:
+                # Double length
+                c = struct.unpack(">H", f.read(2))[0]
+                # Verify
+                if (c & 0x8000) == 0:
+                    print("Double length stitch didn't have leading 1.")
+                    sys.exit(0)
+                c = (c & 0x07FF) * (-1 if (c & 0x0800) > 0 else 1)
+                return c
+            else:
+                # Single length coordinate
+                c = struct.unpack("B", f.read(1))[0]
+                if (c & 0x80) != 0:
+                    print("Single length stitch didn't have leading 0.")
+                    sys.exit(0)
+                c = (c & 0x3F) * (-1 if (c & 0x70) > 0 else 1)
+                return c
 
-            if single == 0xFF:
-                print("End stitches")
-                break
+
 
         while True:
             x = getCoordinate()
             y = getCoordinate()
+
+            if x is "End" or y is "End":
+                break
 
             cls.addLine(Global.x, Global.y, Global.x + x, Global.y + y, int(random.uniform(0,255)), int(random.uniform(0,255)), int(random.uniform(0,255)))
 
