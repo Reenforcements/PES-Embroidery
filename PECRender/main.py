@@ -15,25 +15,80 @@ filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understand
 class Global:
     pauseEmbroidery = False
     batch = pyglet.graphics.Batch()
-    x1 = 0
-    y1 = 0
-    x2 = 0
-    y2 = 0
+    x = 0
+    y = 0
     file = None
+    scale = 1.0
 
     @classmethod
     def addLine(cls, x1, y1, x2, y2, r, g, b):
         cls.batch.add(2, pyglet.gl.GL_LINES, None,
-                         ('v2i', (x1, y1, x2, y2)),
+                         ('v2f', (x1 / cls.scale, y1 / cls.scale, x2 / cls.scale, y2 / cls.scale)),
                          ('c3B', (r,g,b, r,g,b))
                          )
+        print("Stitch from ({}, {}) to ({}, {})".format(x1, y1, x2, y2) )
+        cls.x = x2
+        cls.y = y2
 
     @classmethod
     def readPECHeader(cls):
         if cls.file is None:
             return
 
-        
+        f = cls.file # type: file
+        print(f.read(8))
+        PECOffset = struct.unpack("<I", f.read(4))[0]
+        f.seek(PECOffset)
+        # Skip stuff
+        cls.label = f.read(20)
+        print("Label: {}".format(cls.label))
+        f.read(28)
+        cls.numberOfColors = struct.unpack("B", f.read(1))[0] + 1
+        print("Number of colors: {}".format(cls.numberOfColors))
+
+        cls.colors = []
+        for c in range(0, cls.numberOfColors):
+            color = struct.unpack("B", f.read(1))[0]
+            cls.colors.append(color)
+            print("    Color {}: {}".format(c, color))
+
+
+        f.read(462 - cls.numberOfColors)
+        # blank = struct.unpack("BB", f.read(2))
+        # if blank is not (0,0):
+        #     print("nope: {}".format(blank) )
+        #     sys.exit(0)
+        f.read(20)
+        print("Starting stitches at location: {}".format(f.tell()))
+
+        # I'm pretty sure one coordinate can be the long form
+        #  and the second one is short or vice versa. I initially
+        #  thought they had to come in pairs but that didn't seem
+        #  to be working so let's try it this way.
+        def getCoordinate():
+            peek = f.read(1)
+            f.seek(f.tell() - 1)
+            if peek is None:
+                break
+
+            peekByte = struct.unpack("B", peek)[0]
+            if (peekByte & 0x80) > 0:
+
+            if single == 0xFF:
+                print("End stitches")
+                break
+
+        while True:
+            x = getCoordinate()
+            y = getCoordinate()
+
+            cls.addLine(Global.x, Global.y, Global.x + x, Global.y + y, int(random.uniform(0,255)), int(random.uniform(0,255)), int(random.uniform(0,255)))
+
+
+
+
+
+
 
 
 
