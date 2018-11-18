@@ -1,3 +1,11 @@
+# 11/18
+
+Y axis was flipped apparently.
+
+It seems to be mostly working, but it's getting off track somehow. I think I'm missing a key command in these stitches somewhere. Some of the stitches probably have special meaning that I'm using as coordinates and that's distorting things.
+
+I WAS STILL DOING THE TWO'S COMPLEMENT MATH INCORRECTLY AHHHHH
+
 # 11/17
 
 These documentation pages I found have contradictory information XD. I'm just going to do my best and hope it works and doesn't end up breaking my machine somehow.
