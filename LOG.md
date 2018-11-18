@@ -1,3 +1,11 @@
+# 11/17
+
+These documentation pages I found have contradictory information XD. I'm just going to do my best and hope it works and doesn't end up breaking my machine somehow.
+
+I think I need a stitch visualizer like how Simplify3D lets you scrub through GCode. Working with this proprietary format is tough because documentation is just how much people have reverse engineered. If I make a visualizer, I can understand for myself how each stitch works. I think I can use pyglet to accomplish this easily. Either that or I'm going to delve into source code of software that interprets stitches (like the Python package that can generate PNGs from PES files.)
+
+Well, I was doing the code for two's complement incorrectly. I fixed some things and now I at least can see the shape of Tux's foot in the renderer. Progress!
+
 # 11/16
 
 I haven't had the chance to work on this in a while. That's ok, this weekend is partially dedicated to coding this project (among other things.)
@@ -13,10 +21,6 @@ I'd like to try to optimize the groups of stitches to minimize jumps and make th
 In version 1 of the .PES format, the PES and PEC sections contain the same data.
 
 I think I'm going to try totally skipping the PES section because it won't be needed for embroidering, which is the purpose of this software.
-
-These documentation pages I found have contradictory information XD. I'm just going to do my best and hope it works and doesn't end up breaking my machine somehow.
-
-I think I need a stitch visualizer like how Simplify3D lets you scrub through GCode. Working with this proprietary format is tough because documentation is just how much people have reverse engineered. If I make a visualizer, I can understand for myself how each stitch works. I think I can use pyglet to accomplish this easily. Either that or I'm going to delve into source code of software that interprets stitches (like the Python package that can generate PNGs from PES files.)
 
 # 11/6
 
