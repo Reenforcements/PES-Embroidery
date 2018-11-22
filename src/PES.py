@@ -1,5 +1,6 @@
 from struct import pack
 from svgpathtools import Line
+import math
 
 def encodeU8(num):
     return pack("<B", num)
@@ -26,11 +27,86 @@ The PES object and all the objects that follow it
 are for easy encoding to the PES format.
 '''
 class PES:
+    colors = [('Prussian Blue', 26, 10, 148),
+              ('Blue', 15, 117, 255),
+              ('Teal Green', 0, 147, 76),
+              ('Corn Flower Blue', 186, 189, 254),
+              ('Red', 236, 0, 0),
+              ('Reddish Brown', 228, 153, 90),
+              ('Magenta', 204, 72, 171),
+              ('Light Lilac', 253, 196, 250),
+              ('Lilac', 221, 132, 205),
+              ('Mint Green', 107, 211, 138),
+              ('Deep Gold', 228, 169, 69),
+              ('Orange', 255, 189, 66),
+              ('Yellow', 255, 230, 0),
+              ('Lime Green', 108, 217, 0),
+              ('Brass', 193, 169, 65),
+              ('Silver', 181, 173, 151),
+              ('Russet Brown', 186, 156, 95),
+              ('Cream Brown', 250, 245, 158),
+              ('Pewter', 128, 128, 128),
+              ('Black', 0, 0, 0),
+              ('Ultramarine', 0, 28, 223),
+              ('Royal Purple', 223, 0, 184),
+              ('Dark Gray', 98, 98, 98),
+              ('Dark Brown', 105, 38, 13),
+              ('Deep Rose', 255, 0, 96),
+              ('Light Brown', 191, 130, 0),
+              ('Salmon Pink', 243, 145, 120),
+              ('Vermilion', 255, 104, 5),
+              ('White', 240, 240, 240),
+              ('Violet', 200, 50, 205),
+              ('Seacrest', 176, 191, 155),
+              ('Sky Blue', 101, 191, 235),
+              ('Pumpkin', 255, 186, 4),
+              ('Cream Yellow', 255, 240, 108),
+              ('Khaki', 254, 202, 21),
+              ('Clay Brown', 243, 129, 1),
+              ('Leaf Green', 55, 169, 35),
+              ('Peacock Blue', 35, 70, 95),
+              ('Gray', 166, 166, 149),
+              ('Warm Gray', 206, 191, 166),
+              ('Dark Olive', 150, 170, 2),
+              ('Linen', 255, 227, 198),
+              ('Pink', 255, 153, 215),
+              ('Deep Green', 0, 112, 4),
+              ('Lavender', 237, 204, 251),
+              ('Wisteria Violet', 192, 137, 216),
+              ('Beige', 231, 217, 180),
+              ('Carmine', 233, 14, 134),
+              ('Amber Red', 207, 104, 41),
+              ('Olive Green', 64, 134, 21),
+              ('Dark Fuchsia', 219, 23, 151),
+              ('Tangerine', 255, 167, 4),
+              ('Light Blue', 185, 255, 255),
+              ('Emerald Green', 34, 137, 39),
+              ('Purple', 182, 18, 205),
+              ('Moss Green', 0, 170, 0),
+              ('Flesh Pink', 254, 169, 220),
+              ('Harvest Gold', 254, 213, 16),
+              ('Electric Blue', 0, 151, 223),
+              ('Lemon Yellow', 255, 255, 132),
+              ('Fresh Green', 207, 231, 116),
+              ('Applique Material', 255, 200, 100),
+              ('Applique Position', 255, 200, 200),
+              ('Applique', 255, 200, 200)]
 
-    def __init__(self):
+    @classmethod
+    def getClosestColor(cls, color):
+        # Black by default
+        closest = 19
+        for cur in cls.colors:
+            red =  math.pow( cur[1] - color[0], 2)
+            green = math.pow(cur[1] - color[0], 2)
+            blue = math.pow(cur[1] - color[0], 2)
+            dist = math.sqrt( red + green + blue )
+
+    def __init__(self, stitchCommands=[]):
         self.magic = "#PES"
         self.version = "0001"
         self.sections = []
+        self.stitchCommands = []
 
     def encode(self):
         b = bytearray()
@@ -61,10 +137,10 @@ class PES:
         return b
 
 class PEC:
-    def __init__(self):
+    def __init__(self, stitchCommands=[]):
         self.label = "default"
         self.numberOfColors = 1
-        self.stitches = []
+        self.stitchCommands = stitchCommands
 
 
     def encode(self, b):
@@ -115,7 +191,7 @@ class PEC:
 
         b.extend([0x00] * 4)
 
-        for stitch in self.stitches:
+        for stitch in self.stitchCommands:
             stitch.encode(b)
 
         # End of stitch list
@@ -147,6 +223,7 @@ class CSewSeg:
         None
 
 class Stitch:
+    TYPE_ERROR = 0
     TYPE_LONG = 0x8000
     TYPE_JUMP = 0x9000
     TYPE_TRIM = 0xA000
@@ -155,15 +232,20 @@ class Stitch:
     # Initialize a new stitch from the previous location
     #  to the new location.
     def __init__(self, line):
-        assert(line is Line)
+        assert(type(line) is Line)
 
         self.line = line
+
+        self.type = Stitch.TYPE_LONG
 
         self.previous = line.start
         self.new = line.end
 
     def encode(self, b):
         None
+
+    def length(self):
+        return self.line.length()
 
     # Flips the start and end points of a stitch
     def reverse(self):

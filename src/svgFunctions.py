@@ -2,18 +2,38 @@ import svgpathtools
 from PES_Emb_mathutils import *
 from PES_render_utils import *
 from PES import Stitch
+import re
 import numpy
 
 def loadVectorGraphic(filename):
     svg = None
+    attributes = None
     try:
-        svg = svgpathtools.svg2paths(filename)
+        svg, attributes = svgpathtools.svg2paths(filename)
     except:
         print("Couldn't load SVG file. Perhaps it doesn't exist?")
 
-    return svg
+    return svg, attributes
 
-def makeStitchLines(shape, threadWidth=0.04, slope=1):
+def getColorOfPathAtIndex(attributes, index):
+    color = (0, 0, 0)
+
+    if attributes is None:
+        return color
+
+    try:
+        m = re.search("fill:#(\S{6})", attributes[index]["style"])
+        last = m.group(1)
+        r = int(last[0:2], 16)
+        g = int(last[2:4], 16)
+        b = int(last[4:6], 16)
+        color = (r, g, b)
+    except:
+        None
+
+    return color
+
+def makeStitchLines(shape, fillColor=(0,0,0), threadWidth=0.04, slope=1):
     """
 
     :type shape: svgpathtools.CubicBezier
@@ -81,14 +101,22 @@ def makeStitchLines(shape, threadWidth=0.04, slope=1):
             end = l.point(intersections[i+1][1][0])
             # Create a stitch for the given start and end points
             l = Line(start=start, end=end)
-
-            # Choose a stitch format based on the last stitch
-
             s = Stitch(line=l)
+
             stitchLines.append(s)
 
-            # Draw lines
-            GenericRenderer.globalRenderer.addLine(l, 255, 0, 50)
+            # Draw debug lines
+            GenericRenderer.globalRenderer.addLine(l, fillColor[0], fillColor[1], fillColor[2])
 
 
     return stitchLines
+
+# Take all the stitches we created and actually make
+#  a continuous set of commands for the machine to follow.
+def createStitchRoutine(basicStitches):
+    for shapeStitches in basicStitches:
+        for stitch in shapeStitches:
+            # Remove lines that are super short
+            if stitch.length() < 5.0:
+                continue
+

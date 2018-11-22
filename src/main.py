@@ -22,15 +22,23 @@ if args.debug:
 # Load the SVG file from disk
 svg = loadVectorGraphic(args.inputFile)
 paths, attributes = svg
-if paths is None or attributes is None:
+
+if paths is None:
     sys.exit(0)
 
 # Enumerate the shapes in the SVG to find where stitches should go.
-for shape in paths:
-    print(shape)
-    stitchLines = makeStitchLines(shape)
+basicStitches = []
+for i, shape in enumerate(paths):
+    fillColor = getColorOfPathAtIndex(attributes,i)
+    print("Doing shape {} with fill color {}".format(shape, fillColor))
+    stitchLines = makeStitchLines(shape,fillColor)
+    # Append the stitches as their own array so we can separate by colors
+    basicStitches.append(stitchLines)
 
-pes = PES()
+# Make the stitches into a continuous set of commands
+stitchCommands = createStitchRoutine(basicStitches)
+
+pes = PES(stitchCommands=stitchCommands)
 pes.encode()
 
 if args.debug:
