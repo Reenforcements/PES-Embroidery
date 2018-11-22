@@ -1,5 +1,6 @@
 from svgpathtools import Line
 import math
+import numpy
 
 # Represents your average y = mx + b line
 class InfLine:
@@ -18,10 +19,32 @@ class InfLine:
             self.m = 1 / self.m
 
     def to_svg_Line(self, center, length):
-        h = length / 2.0
-        ext1 = complex( (center.real + h), self.y_for_x(center.real + h) )
-        ext2 = complex( ext1.real - length, ext1.imag - length)
-        return Line(start=ext1, end=ext2)
+        # center = 2.0+0j
+        # length = 2.0*math.pow(8.0, 0.5)
+        # self.m = 1.0
+        # self.b = -2
+
+        dist = length / 2.0
+        # Find the two values of x that are "dist" down each
+        #  side of the line.
+        # I did this on paper, and its just a quadratic equation that
+        #  needs to be solved. Nothing a little numpy can't fix.
+        xRoots = numpy.roots([ (1 + math.pow(self.m, 2.0) ),
+                               ((-2 * center.real * math.pow(self.m, 2.0)) - (2*center.real)),
+                               (math.pow(center.real, 2.0)*math.pow(self.m, 2.0)) + (math.pow(center.real, 2.0)) - (math.pow(dist, 2.0))  ])
+        
+        assert(len(xRoots) == 2)
+        assert(numpy.isreal(xRoots[0]))
+        assert (numpy.isreal(xRoots[1]))
+
+        return Line(start=(xRoots[0], self.y_for_x(xRoots[0])),
+                    end=(xRoots[1], self.y_for_x(xRoots[1])))
+
+
+        # h = length / 2.0
+        # ext1 = complex( (center.real + h), self.y_for_x(center.real + h) )
+        # ext2 = complex( ext1.real - length, ext1.imag - length)
+        # return Line(start=ext1, end=ext2)
 
 def getBoxDiagonalLength(left, right, top, bottom):
     return math.sqrt( math.pow(left-right, 2) + math.pow(top-bottom, 2) )

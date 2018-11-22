@@ -77,11 +77,6 @@ class Global:
         print("Width and height of design: {}, {}".format(width, height))
         print("Starting stitches at location: {}".format(f.tell()))
 
-        # Get the starting point
-        Global.x = -Global.getCoordinate(f)
-        Global.y = Global.getCoordinate(f)
-
-
         Global.addLine(Global.x, Global.y, width, 0,
                        (Global.testColors[Global.colorIndex])[0],
                        (Global.testColors[Global.colorIndex])[1],
@@ -94,10 +89,22 @@ class Global:
                        (Global.testColors[Global.colorIndex])[0],
                        (Global.testColors[Global.colorIndex])[1],
                        (Global.testColors[Global.colorIndex])[2])
-        Global.addLine(Global.x, Global.y, Global.x + 0, Global.y +  -height,
+        Global.addLine(Global.x, Global.y, Global.x + 0, Global.y + -height,
                        (Global.testColors[Global.colorIndex])[0],
                        (Global.testColors[Global.colorIndex])[1],
                        (Global.testColors[Global.colorIndex])[2])
+
+        # Get the starting point
+        while True:
+            Global.x = Global.getCoordinate(f)
+            Global.y = -Global.getCoordinate(f)
+
+            if Global.x != 0 or Global.y != 0:
+                break
+        print("Starting at coordinates: ({}, {})".format(Global.x, Global.y))
+
+
+
 
     # I'm pretty sure one coordinate can be the long form
     #  and the second one is short or vice versa. I initially

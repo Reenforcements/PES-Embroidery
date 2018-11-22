@@ -1,4 +1,5 @@
 from struct import pack
+from svgpathtools import Line
 
 def encodeU8(num):
     return pack("<B", num)
@@ -146,17 +147,24 @@ class CSewSeg:
         None
 
 class Stitch:
-    TYPE_JUMP = 0
-    TYPE_
-    def __init__(self, start, end):
-        if type(start) != complex:
-            raise Exception("Stitch - start point not a point object.")
+    TYPE_LONG = 0x8000
+    TYPE_JUMP = 0x9000
+    TYPE_TRIM = 0xA000
+    TYPE_COLOR_CHANGE = 0xFEB0
 
-        if type(end) != complex:
-            raise Exception("Stitch - end point not a point object.")
+    # Initialize a new stitch from the previous location
+    #  to the new location.
+    def __init__(self, line):
+        assert(line is Line)
 
-        self.start = start
-        self.end = end
+        self.line = line
+
+        self.previous = line.start
+        self.new = line.end
 
     def encode(self, b):
         None
+
+    # Flips the start and end points of a stitch
+    def reverse(self):
+        self.line = Line(start=self.line.end, end=self.line.start)
