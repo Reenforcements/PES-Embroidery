@@ -6,6 +6,7 @@ import numpy
 class InfLine:
     def __init__(self, m, center):
         self.m = m
+        self.center = center
         self.b = center.imag - (center.real * m)
 
     def x_for_y(self, y):
@@ -16,14 +17,15 @@ class InfLine:
 
     def invertSlope(self):
         if self.m is not 0:
-            self.m = 1 / self.m
+            m2 = -1.0 / self.m
+            # Find a new b to maintain the center
+            b2 = (self.center.imag - (m2 * self.center.real))
+
+            self.m = m2
+            self.b = b2
+
 
     def to_svg_Line(self, center, length):
-        # center = 2.0+0j
-        # length = 2.0*math.pow(8.0, 0.5)
-        # self.m = 1.0
-        # self.b = -2
-
         dist = length / 2.0
         # Find the two values of x that are "dist" down each
         #  side of the line.
@@ -32,13 +34,13 @@ class InfLine:
         xRoots = numpy.roots([ (1 + math.pow(self.m, 2.0) ),
                                ((-2 * center.real * math.pow(self.m, 2.0)) - (2*center.real)),
                                (math.pow(center.real, 2.0)*math.pow(self.m, 2.0)) + (math.pow(center.real, 2.0)) - (math.pow(dist, 2.0))  ])
-        
+
         assert(len(xRoots) == 2)
         assert(numpy.isreal(xRoots[0]))
         assert (numpy.isreal(xRoots[1]))
 
-        return Line(start=(xRoots[0], self.y_for_x(xRoots[0])),
-                    end=(xRoots[1], self.y_for_x(xRoots[1])))
+        return Line( start=complex(xRoots[0], self.y_for_x(xRoots[0]) ),
+                     end= complex(xRoots[1], self.y_for_x(xRoots[1])) )
 
 
         # h = length / 2.0

@@ -1,5 +1,6 @@
 import svgpathtools
 from PES_Emb_mathutils import *
+from PES_render_utils import *
 from PES import Stitch
 import numpy
 
@@ -13,6 +14,10 @@ def loadVectorGraphic(filename):
     return svg
 
 def makeStitchLines(shape, threadWidth=0.04, slope=1):
+    """
+
+    :type shape: svgpathtools.CubicBezier
+    """
     stitchLines = []
 
     # Get the bounds of the shape
@@ -35,6 +40,7 @@ def makeStitchLines(shape, threadWidth=0.04, slope=1):
     intersectionPath.invertSlope()
     p1, p2 = getStartAndEndPointsOfLineInBox(intersectionPath, left, right, top, bottom)
     intersectionPath = Line(start=p1, end=p2)
+
     #print("Start and end points: {}, {}".format(p1,p2))
     #intersectionPath = intersectionPath.to_svg_Line(center=center, length=intersectionLineLength)
 
@@ -48,16 +54,41 @@ def makeStitchLines(shape, threadWidth=0.04, slope=1):
     # Get the max length of the intersection lines we'll need
     intersectionLineLength = getBoxDiagonalLength(left, right, top, bottom)
 
-    print("Total intersections: {} along path: {}".format(totalIntersections, intersectionPath))
+    print("Performing up to {} intersections along path: {}".format(totalIntersections, intersectionPath))
     print("(From {} to {})".format(intersectionPath.point(0), intersectionPath.point(1.0)))
+
+    GenericRenderer.globalRenderer.addPath(shape, 50, 120, 255)
 
     for x in range(0, totalIntersections):
         # Get a new (infinite) line using the point at the current t value
         #  as the center
         center = intersectionPath.point((tIncrementAmount * x) / pathLength)
+        GenericRenderer.globalRenderer.addPoint(center, 255, 255, 0)
         i = InfLine(m=slope, center=center)
         # Convert it to a bezier line
         l = i.to_svg_Line(center=center, length=intersectionLineLength)
-        print((tIncrementAmount * x) / pathLength, l)
+        GenericRenderer.globalRenderer.addLine(l, 255, 255, 255)
+
+        # Intersect with the shape
+        intersections = shape.intersect(l)
+        if len(intersections) % 2 is not 0:
+            s = "Number of intersections should always be even (its {} ). Make sure all shapes are closed shapes.".format(len(intersections))
+            raise Exception(s)
+
+        # Iterate through the intersections to find where to put stitches
+        for i in range(0, len( intersections )/2):
+            start = l.point(intersections[i][1][0])
+            end = l.point(intersections[i+1][1][0])
+            # Create a stitch for the given start and end points
+            l = Line(start=start, end=end)
+
+            # Choose a stitch format based on the last stitch
+
+            s = Stitch(line=l)
+            stitchLines.append(s)
+
+            # Draw lines
+            GenericRenderer.globalRenderer.addLine(l, 255, 0, 50)
+
 
     return stitchLines

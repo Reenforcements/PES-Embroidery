@@ -210,7 +210,7 @@ def on_key_release(symbol, modifiers):
 
 def updateDisplay(s):
     window.clear()
-    pyglet.gl.glLineWidth(2)
+    pyglet.gl.glLineWidth(1)
 
     # Stitch a line
 
