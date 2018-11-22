@@ -96,17 +96,27 @@ class PES:
     def getClosestColor(cls, color):
         # Black by default
         closest = 19
-        for cur in cls.colors:
+        lastDist = 9999.0
+        for i, cur in enumerate(cls.colors):
             red =  math.pow( cur[1] - color[0], 2)
-            green = math.pow(cur[1] - color[0], 2)
-            blue = math.pow(cur[1] - color[0], 2)
+            green = math.pow(cur[2] - color[1], 2)
+            blue = math.pow(cur[3] - color[2], 2)
             dist = math.sqrt( red + green + blue )
+            if dist < lastDist:
+                lastDist = dist
+                closest = i
 
-    def __init__(self, stitchCommands=[]):
+        return (closest,
+        cls.colors[closest][0],
+        cls.colors[closest][1],
+        cls.colors[closest][2],
+        cls.colors[closest][3])
+
+    def __init__(self, PECCommands=[]):
         self.magic = "#PES"
         self.version = "0001"
         self.sections = []
-        self.stitchCommands = []
+        self.PECCommands = []
 
     def encode(self):
         b = bytearray()
@@ -137,10 +147,12 @@ class PES:
         return b
 
 class PEC:
-    def __init__(self, stitchCommands=[]):
+    def __init__(self, commands=[]):
         self.label = "default"
         self.numberOfColors = 1
-        self.stitchCommands = stitchCommands
+
+        # Commands include stitches, jumps, and color changes
+        self.commands = commands
 
 
     def encode(self, b):
@@ -191,8 +203,8 @@ class PEC:
 
         b.extend([0x00] * 4)
 
-        for stitch in self.stitchCommands:
-            stitch.encode(b)
+        for command in self.commands:
+            command.encode(b)
 
         # End of stitch list
         b.extend(0xFF)
@@ -227,7 +239,6 @@ class Stitch:
     TYPE_LONG = 0x8000
     TYPE_JUMP = 0x9000
     TYPE_TRIM = 0xA000
-    TYPE_COLOR_CHANGE = 0xFEB0
 
     # Initialize a new stitch from the previous location
     #  to the new location.
@@ -250,3 +261,12 @@ class Stitch:
     # Flips the start and end points of a stitch
     def reverse(self):
         self.line = Line(start=self.line.end, end=self.line.start)
+
+class ColorChange:
+    TYPE_COLOR_CHANGE = 0xFEB0
+
+    def __init__(self):
+        None
+
+    def encode(self, b):
+        None

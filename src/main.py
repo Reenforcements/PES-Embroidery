@@ -31,14 +31,16 @@ basicStitches = []
 for i, shape in enumerate(paths):
     fillColor = getColorOfPathAtIndex(attributes,i)
     print("Doing shape {} with fill color {}".format(shape, fillColor))
+    print("Closest color: {}".format( PES.getClosestColor(fillColor) ))
+
     stitchLines = makeStitchLines(shape,fillColor)
     # Append the stitches as their own array so we can separate by colors
     basicStitches.append(stitchLines)
 
 # Make the stitches into a continuous set of commands
-stitchCommands = createStitchRoutine(basicStitches)
+PECCommands = createStitchRoutine(basicStitches)
 
-pes = PES(stitchCommands=stitchCommands)
+pes = PES(PECCommands=PECCommands)
 pes.encode()
 
 if args.debug:
