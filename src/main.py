@@ -27,18 +27,18 @@ if paths is None:
     sys.exit(0)
 
 # Enumerate the shapes in the SVG to find where stitches should go.
-basicStitches = []
+basicLines = []
 for i, shape in enumerate(paths):
     fillColor = getColorOfPathAtIndex(attributes,i)
     print("Doing shape {} with fill color {}".format(shape, fillColor))
     print("Closest color: {}".format( PES.getClosestColor(fillColor) ))
 
-    stitchLines = makeStitchLines(shape,fillColor)
+    s = makeStitchLines(shape, fillColor, debug=args.debug)
     # Append the stitches as their own array so we can separate by colors
-    basicStitches.append(stitchLines)
+    basicLines.append(s)
 
 # Make the stitches into a continuous set of commands
-PECCommands = createStitchRoutine(basicStitches)
+PECCommands = createStitchRoutine(basicLines)
 
 pes = PES(PECCommands=PECCommands)
 pes.encode()

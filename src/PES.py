@@ -263,10 +263,13 @@ class Stitch:
         self.line = Line(start=self.line.end, end=self.line.start)
 
 class ColorChange:
-    TYPE_COLOR_CHANGE = 0xFEB0
+    TYPE_COLOR_CHANGE_left = 0xFE
+    TYPE_COLOR_CHANGE_right = 0xB0
 
-    def __init__(self):
-        None
+    def __init__(self, colorIndex):
+        self.colorIndex = colorIndex
 
     def encode(self, b):
-        None
+        b.append(ColorChange.TYPE_COLOR_CHANGE_left)
+        b.append(ColorChange.TYPE_COLOR_CHANGE_right)
+        b.append(self.colorIndex & 0xFF)

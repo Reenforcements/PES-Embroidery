@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5af789-e47c-4138-bdb9-8fa765481e1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/LOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/complexPath.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/complexPath.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PES.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/PES.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PES_Emb_mathutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/PES_Emb_mathutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PES_render_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/PES_render_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/svgFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/svgFunctions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +19,8 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/PES_Embroidery$svgImport.coverage" NAME="svgImport Coverage Results" MODIFIED="1541478220694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/learning" />
-    <SUITE FILE_PATH="coverage/PES_Embroidery$main.coverage" NAME="main Coverage Results" MODIFIED="1542919599191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/PES_Embroidery$PECRender_main.coverage" NAME="PECRender-main Coverage Results" MODIFIED="1542678577371" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PECRender" />
+    <SUITE FILE_PATH="coverage/PES_Embroidery$main.coverage" NAME="main Coverage Results" MODIFIED="1542996815158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/PES_Embroidery$PECRender_main.coverage" NAME="PECRender-main Coverage Results" MODIFIED="1542987287831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PECRender" />
     <SUITE FILE_PATH="coverage/PES_Embroidery$getColors.coverage" NAME="getColors Coverage Results" MODIFIED="1542917684965" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Colors" />
     <SUITE FILE_PATH="coverage/PES_Embroidery$main__1_.coverage" NAME="PECRender-main Coverage Results" MODIFIED="1542509072203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/PECRender" />
   </component>
@@ -23,19 +28,19 @@
     <session id="-1920598427">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="23405" />
+          <entry key="Python" value="25103" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -53,7 +58,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="23405" />
+          <entry key="py" value="25103" />
         </counts>
       </usages-collector>
     </session>
@@ -63,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="46">
+              <caret line="25" column="17" lean-forward="true" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -72,22 +77,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PES.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="730">
-              <caret line="271" column="12" lean-forward="true" selection-start-line="271" selection-start-column="12" selection-end-line="271" selection-end-column="12" />
+            <state relative-caret-position="181">
+              <caret line="235" lean-forward="true" selection-start-line="235" selection-end-line="235" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1542919944286" expanded="true" signature="133:210" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="387:427" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="3372:3919" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="4944:6662" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="6840:6918" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="6932:6971" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="7158:7163" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="7447:7453" ph="..." />
-                <marker date="1542919944286" expanded="true" signature="7639:7644" ph="..." />
+                <marker date="1542986842340" expanded="true" signature="133:210" ph="..." />
+                <marker date="1542986842340" expanded="true" signature="387:427" ph="..." />
               </folding>
             </state>
           </provider>
@@ -96,26 +94,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1502">
-              <caret line="105" column="33" lean-forward="true" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
+            <state relative-caret-position="327">
+              <caret line="160" column="21" lean-forward="true" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1542919038136" expanded="true" signature="421:759" ph="..." />
-                <marker date="1542919038136" expanded="true" signature="832:833" ph="..." />
-                <marker date="1542919038136" expanded="true" signature="832:896" ph="..." />
-                <marker date="1542919038136" expanded="true" signature="4293:4298" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Colors/getColors.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <marker date="1542996346507" expanded="true" signature="421:759" ph="..." />
+                <marker date="1542996346507" expanded="true" signature="842:843" ph="..." />
+                <marker date="1542996346507" expanded="true" signature="842:906" ph="..." />
+                <marker date="1542996346507" expanded="true" signature="5671:5737" ph="..." />
+                <marker date="1542996346507" expanded="true" signature="6985:6990" ph="..." />
               </folding>
             </state>
           </provider>
@@ -124,16 +111,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PES_Emb_mathutils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="74" column="8" lean-forward="true" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
+            <state relative-caret-position="397">
+              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
-                <marker date="1542908071934" expanded="true" signature="112:1695" ph="..." />
-                <marker date="1542908071934" expanded="true" signature="401:624" ph="..." />
-                <marker date="1542908071934" expanded="true" signature="694:1488" ph="..." />
-                <marker date="1542908071934" expanded="true" signature="1746:1822" ph="..." />
-                <marker date="1542908071934" expanded="true" signature="1893:1898" ph="..." />
-                <marker date="1542908071934" expanded="true" signature="1893:2374" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="112:1695" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="401:624" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="694:1488" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="1746:1822" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="1888:1893" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="1888:2539" ph="..." />
+                <marker date="1542995051340" expanded="true" signature="2449:2539" ph="..." />
               </folding>
             </state>
           </provider>
@@ -148,31 +136,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PECRender/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <marker date="1542908086234" expanded="true" signature="272:446" ph="..." />
-                <marker date="1542908086234" expanded="true" signature="6331:6335" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+            <state relative-caret-position="225">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1542906615593" expanded="true" signature="129:130" ph="..." />
-                <marker date="1542906615593" expanded="true" signature="129:135" ph="..." />
-                <marker date="1542906615593" expanded="true" signature="1186:1387" ph="..." />
-                <marker date="1542906615593" expanded="true" signature="1414:1509" ph="..." />
+                <marker date="1542996800150" expanded="true" signature="129:130" ph="..." />
+                <marker date="1542996800150" expanded="true" signature="129:135" ph="..." />
+                <marker date="1542996800150" expanded="true" signature="1233:1441" ph="..." />
+                <marker date="1542996800150" expanded="true" signature="1468:1563" ph="..." />
               </folding>
             </state>
           </provider>
@@ -189,9 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>0xfe</find>
-      <find>End stitches</find>
-      <find>Beep</find>
       <find>color</find>
       <find>color change</find>
       <find>Color change</find>
@@ -199,18 +170,14 @@
       <find>width</find>
       <find>getCoordinate</find>
       <find>sdfsd</find>
-      <find>getStartAndEndPointsOfLineInBox</find>
       <find>getBoxDiagonalLength</find>
-      <find>InfLine</find>
       <find>to_svg</find>
       <find>to_svg_Line</find>
       <find>svgpathtools</find>
       <find>invert</find>
-      <find>invertSlope</find>
       <find>intersectionPath</find>
       <find>readBytes</find>
       <find>Blue</find>
-      <find>Stitch</find>
       <find>Teal</find>
       <find>imag</find>
       <find>attributesattributes</find>
@@ -219,6 +186,13 @@
       <find>makeStitchLines</find>
       <find>loadVectorGraphic</find>
       <find>getClosestColor</find>
+      <find>getStartAndEndPointsOfLineInBox</find>
+      <find>x_for_y</find>
+      <find>invertSlope</find>
+      <find>InfLine</find>
+      <find>[</find>
+      <find>addPoint</find>
+      <find>Stitch</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -233,13 +207,13 @@
         <option value="$PROJECT_DIR$/src/svg.py" />
         <option value="$PROJECT_DIR$/src/PES-Emb-mathutils.py" />
         <option value="$PROJECT_DIR$/src/utilities.py" />
-        <option value="$PROJECT_DIR$/src/PES_render_utils.py" />
-        <option value="$PROJECT_DIR$/src/PES_Emb_mathutils.py" />
         <option value="$PROJECT_DIR$/PECRender/main.py" />
         <option value="$PROJECT_DIR$/Colors/getColors.py" />
-        <option value="$PROJECT_DIR$/src/svgFunctions.py" />
-        <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/PES.py" />
+        <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/PES_Emb_mathutils.py" />
+        <option value="$PROJECT_DIR$/src/svgFunctions.py" />
+        <option value="$PROJECT_DIR$/src/PES_render_utils.py" />
       </list>
     </option>
   </component>
@@ -249,7 +223,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="1027" />
@@ -262,7 +236,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -293,6 +266,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,7 +352,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
-      <option name="PARAMETERS" value="-i ../Tests/simplePath.svg -o ../TestOutput/simple.PES -d" />
+      <option name="PARAMETERS" value="-i ../Tests/zigzag.svg -o ../TestOutput/simple.PES -d" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -416,8 +390,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.getColors" />
         <item itemvalue="Python.PECRender-main" />
+        <item itemvalue="Python.getColors" />
         <item itemvalue="Python.svgImport" />
       </list>
     </recent_temporary>
@@ -436,10 +410,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15873016" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16056167" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -548,16 +522,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
+    <entry file="file:///usr/local/lib/python2.7/site-packages/svgpathtools/path.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        <state relative-caret-position="199">
+          <caret line="1120" column="8" selection-start-line="1120" selection-start-column="8" selection-end-line="1120" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Colors/getColors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="82" column="30" lean-forward="true" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1542906615593" expanded="true" signature="129:130" ph="..." />
-            <marker date="1542906615593" expanded="true" signature="129:135" ph="..." />
-            <marker date="1542906615593" expanded="true" signature="1186:1387" ph="..." />
-            <marker date="1542906615593" expanded="true" signature="1414:1509" ph="..." />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -568,16 +545,61 @@
           <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <marker date="1542908086234" expanded="true" signature="272:446" ph="..." />
-            <marker date="1542908086234" expanded="true" signature="6331:6335" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/site-packages/svgpathtools/path.py">
+    <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="1120" column="8" selection-start-line="1120" selection-start-column="8" selection-end-line="1120" selection-end-column="8" />
+        <state relative-caret-position="46">
+          <caret line="25" column="17" lean-forward="true" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="160" column="21" lean-forward="true" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1542996346507" expanded="true" signature="421:759" ph="..." />
+            <marker date="1542996346507" expanded="true" signature="842:843" ph="..." />
+            <marker date="1542996346507" expanded="true" signature="842:906" ph="..." />
+            <marker date="1542996346507" expanded="true" signature="5671:5737" ph="..." />
+            <marker date="1542996346507" expanded="true" signature="6985:6990" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PES.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="235" lean-forward="true" selection-start-line="235" selection-end-line="235" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1542986842340" expanded="true" signature="133:210" ph="..." />
+            <marker date="1542986842340" expanded="true" signature="387:427" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PES_Emb_mathutils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+            <marker date="1542995051340" expanded="true" signature="112:1695" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="401:624" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="694:1488" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="1746:1822" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="1888:1893" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="1888:2539" ph="..." />
+            <marker date="1542995051340" expanded="true" signature="2449:2539" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -588,71 +610,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PES_Emb_mathutils.py">
+    <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="74" column="8" lean-forward="true" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
+        <state relative-caret-position="225">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
-            <marker date="1542908071934" expanded="true" signature="112:1695" ph="..." />
-            <marker date="1542908071934" expanded="true" signature="401:624" ph="..." />
-            <marker date="1542908071934" expanded="true" signature="694:1488" ph="..." />
-            <marker date="1542908071934" expanded="true" signature="1746:1822" ph="..." />
-            <marker date="1542908071934" expanded="true" signature="1893:1898" ph="..." />
-            <marker date="1542908071934" expanded="true" signature="1893:2374" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Colors/getColors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1502">
-          <caret line="105" column="33" lean-forward="true" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1542919038136" expanded="true" signature="421:759" ph="..." />
-            <marker date="1542919038136" expanded="true" signature="832:833" ph="..." />
-            <marker date="1542919038136" expanded="true" signature="832:896" ph="..." />
-            <marker date="1542919038136" expanded="true" signature="4293:4298" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PES.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="730">
-          <caret line="271" column="12" lean-forward="true" selection-start-line="271" selection-start-column="12" selection-end-line="271" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <marker date="1542919944286" expanded="true" signature="133:210" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="387:427" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="3372:3919" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="4944:6662" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="6840:6918" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="6932:6971" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="7158:7163" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="7447:7453" ph="..." />
-            <marker date="1542919944286" expanded="true" signature="7639:7644" ph="..." />
+            <element signature="e#0#13#0" expanded="true" />
+            <marker date="1542996800150" expanded="true" signature="129:130" ph="..." />
+            <marker date="1542996800150" expanded="true" signature="129:135" ph="..." />
+            <marker date="1542996800150" expanded="true" signature="1233:1441" ph="..." />
+            <marker date="1542996800150" expanded="true" signature="1468:1563" ph="..." />
           </folding>
         </state>
       </provider>

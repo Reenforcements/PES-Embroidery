@@ -15,6 +15,7 @@ class GenericRenderer:
         self.pointBatch = pyglet.graphics.Batch()
 
         pyglet.gl.glLineWidth(2)
+        pyglet.gl.glPointSize(4)
 
         self.addLine(Line(start=(0+0j), end=(1000+1000j)), 255, 0, 0)
 
@@ -22,7 +23,7 @@ class GenericRenderer:
 
     def addLine(self, line, r, g, b):
             self.lineBatch.add(2, pyglet.gl.GL_LINES, None,
-                             ('v2f', (line.start.real, line.start.imag, line.end.real, line.end.imag)),
+                             ('v2f', (line.start.real, 1000 - line.start.imag, line.end.real, 1000 - line.end.imag)),
                              ('c3B', (r,g,b, r,g,b))
             )
     def addPath(self, path, r, g, b):
@@ -34,7 +35,7 @@ class GenericRenderer:
 
     def addPoint(self, point, r, g, b):
         self.pointBatch.add(1, pyglet.gl.GL_POINTS, None,
-                           ('v2f', (point.real, point.imag)),
+                           ('v2f', (point.real, 1000 - point.imag)),
                            ('c3B', (r, g, b))
                            )
 

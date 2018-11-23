@@ -1,3 +1,9 @@
+
+
+# 11/23
+
+Very good progress. I figured out that paths don't work properly unless you draw them a certain way. I'm not exactly sure what that way is yet. I think you just have to draw shapes counter clockwise.
+
 # 11/18
 
 Y axis was flipped apparently.

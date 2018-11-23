@@ -51,23 +51,27 @@ class InfLine:
 def getBoxDiagonalLength(left, right, top, bottom):
     return math.sqrt( math.pow(left-right, 2) + math.pow(top-bottom, 2) )
 
-def getStartAndEndPointsOfLineInBox(infLine, left, right, top, bottom):
+def getIntersectionPathFromBox(infLine, left, right, top, bottom):
     # Intersect the line with all the sides of the box and
     #  take the two points inside the box.
     # This will always be on the top and bottom
     # or on the left and right sides.
     p1 = complex(left, infLine.y_for_x(left))
     p2 = complex(right, infLine.y_for_x(right))
+    l1 = Line(start=p1,end=p2)
 
-    p3 = complex(top, infLine.x_for_y(top))
-    p4 = complex(bottom, infLine.x_for_y(bottom))
+    p3 = complex(infLine.x_for_y(top), top)
+    p4 = complex(infLine.x_for_y(bottom), bottom)
+    l2 = Line(start=p3, end=p4)
 
-    if p1.imag <= top and p1.imag >= bottom:
-        return p3, p4
+    if l1.length() < l2.length():
+        return l2
     else:
-        return p1, p2
+        return l1
 
 
+def getDistanceBetweenPoints(p1, p2):
+    return math.sqrt( math.pow(p1.real - p2.real, 2) + math.pow(p1.imag - p2.imag, 2) )
 
 # Creates a line with the given y intercept (b) that covers
 #  the given bounding box.
