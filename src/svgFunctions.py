@@ -167,12 +167,58 @@ def makeStitchLines(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fals
 
     return stitchLines
 
+def invertLine(line):
+    return Line(start=line.end, end=line.start)
+
+def endWithinStart(l1, l2, dist):
+    p1 = l1.end
+    p2 = l2.start
+    return math.sqrt( math.pow(p1.real - p2.real, 2) + math.pow(p1.imag - p2.imag, 2) ) <= dist
+
 # Take all the stitches we created and actually make
 #  a continuous set of commands for the machine to follow.
-def createStitchRoutine(basicLines):
+def createStitchRoutine(basicLines, threadWidth=2):
+
+    maxDist = math.sqrt(2 * math.pow(threadWidth,2))
+
+    shapeLineGroups = []
+    # For each set of lines corresponding to each SVG shape...
     for shapeLines in basicLines:
-        for line in shapeLines:
-            # Remove lines that are super short
-            if line.length() < 5.0:
+        # Find an order of lines that works with (relatively) minimum jumping.
+        # This requires us to group lines by continuity
+        lineGroups = []
+        shapeLineGroups.append(lineGroups)
+
+        for ungroupedLine in shapeLines:
+            # Remove lines that are super short (less than 0.5mm)
+            if ungroupedLine.length() < 5.0:
                 continue
+
+            # Does the line connect to any of the current groups?
+            foundGroup = None
+            for lineGroup in lineGroups:
+                lastLine = lineGroup[-1]
+                # Is the start of this line near the end of the last one?
+                if endWithinStart(lastLine, ungroupedLine, maxDist):
+                    foundGroup = lineGroup
+                    break
+                # Try switching the start and end points of the line.
+                ungroupedLine = invertLine(ungroupedLine)
+                if endWithinStart(lastLine, ungroupedLine, maxDist):
+                    foundGroup = lineGroup
+
+            # Did we find a group that works?
+            if foundGroup is not None:
+                foundGroup.append(ungroupedLine)
+            else:
+                # Start a new group
+                newGroup = [ungroupedLine]
+                lineGroups.append(newGroup)
+
+    # Connect the groups together with jump stitches
+
+
+
+
+
 
