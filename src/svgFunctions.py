@@ -1,7 +1,7 @@
 import svgpathtools
 from PES_Emb_mathutils import *
 from PES_render_utils import *
-from PES import Stitch
+from PES import *
 import re
 import numpy
 
@@ -177,7 +177,7 @@ def endWithinStart(l1, l2, dist):
 
 # Take all the stitches we created and actually make
 #  a continuous set of commands for the machine to follow.
-def createStitchRoutine(basicLines, threadWidth=2):
+def createStitchRoutine(basicLines, fillColors, threadWidth=2):
 
     maxDist = math.sqrt(2 * math.pow(threadWidth,2))
 
@@ -215,10 +215,47 @@ def createStitchRoutine(basicLines, threadWidth=2):
                 newGroup = [ungroupedLine]
                 lineGroups.append(newGroup)
 
-    # Connect the groups together with jump stitches
+    # Add color change, convert lines to stitches and add jump commands
+    allStitches = []
 
+    for i, shapeLineGroup in enumerate(shapeLineGroups):
+        # Create the color change command.
+        fillColor = fillColors[i]
+        colorData = PES.getClosestColor(fillColor)
 
+        colorChange = ColorChange(colorIndex=colorData[0])
+        allStitches.append(colorChange)
 
+        for singleLineGroup in shapeLineGroup:
+            # Was the last command a stitch?
+            if isinstance(allStitches[-1], Stitch):
+                lastStitch = allStitches[-1]
+                # Is the distance greater than the minimum?
+                if endWithinStart(lastStitch.line, singleLineGroup[0], maxDist) is not True:
+                    # Jump to the location of this shape.
+                    jump = Stitch( line=Line(start=lastStitch.line.end,  end=singleLineGroup[0].start) )
+                    jump.type = Stitch.TYPE_JUMP
+                    allStitches.append(jump)
 
+            for singleLine in singleLineGroup:
+                # Do I really need to do two stitches per stitch or just one?
+                # Maybe I can add different modes for this.
+                s = Stitch(singleLine)
+                allStitches.append(s)
 
+    print("Created {} stitches.".format(len(allStitches)))
+    return allStitches
 
+def renderPECCommands(PECCommands):
+    GenericRenderer.globalRenderer.clearAll()
+
+    currentColor = ("None", 0,0,0)
+    for command in PECCommands:
+        if isinstance(command, Stitch):
+            if command.type is Stitch.TYPE_JUMP:
+                GenericRenderer.globalRenderer.addLine(command.line, 255, 255, 255)
+            else:
+                # Regular stitch
+                GenericRenderer.globalRenderer.addLine(command.line, currentColor[1], currentColor[2], currentColor[3])
+        if isinstance(command, ColorChange):
+            currentColor = PES.colors[command.colorIndex]

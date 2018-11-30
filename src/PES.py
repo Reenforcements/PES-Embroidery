@@ -235,7 +235,7 @@ class CSewSeg:
         None
 
 class Stitch:
-    TYPE_ERROR = 0
+    TYPE_SHORT = 0x00
     TYPE_LONG = 0x8000
     TYPE_JUMP = 0x9000
     TYPE_TRIM = 0xA000
@@ -243,14 +243,15 @@ class Stitch:
     # Initialize a new stitch from the previous location
     #  to the new location.
     def __init__(self, line):
-        assert(type(line) is Line)
+        assert(isinstance(line, Line))
 
         self.line = line
 
-        self.type = Stitch.TYPE_LONG
+        if self.line.length() < 63.0:
+            self.type = Stitch.TYPE_SHORT
+        else:
+            self.type = Stitch.TYPE_LONG
 
-        self.previous = line.start
-        self.new = line.end
 
     def encode(self, b):
         None

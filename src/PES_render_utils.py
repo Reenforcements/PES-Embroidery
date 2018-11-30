@@ -39,6 +39,10 @@ class GenericRenderer:
                            ('c3B', (r, g, b))
                            )
 
+    def clearAll(self):
+        self.lineBatch = pyglet.graphics.Batch()
+        self.pointBatch = pyglet.graphics.Batch()
+
     def updateDisplay(self, s):
         self.window.clear()
         self.lineBatch.draw()
