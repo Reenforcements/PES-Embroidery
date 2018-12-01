@@ -25,6 +25,7 @@ class InfLine:
 
             self.m = m2
             self.b = b2
+
     def matchInfLine(self, infLine):
         self.b = infLine.b
         self.m = infLine.m
@@ -104,8 +105,8 @@ def invertLine(line, scale=1.0):
     p1 = line.start - center
     p2 = line.end - center
 
-    p1 = complex(p2.imag, p1.real) * scale
-    p2 = complex(p1.imag , p2.real) * scale
+    p1 = complex(p1.imag, p2.real) * scale
+    p2 = complex(p2.imag , p1.real) * scale
 
     # Shift back
     p1 = p1 + center

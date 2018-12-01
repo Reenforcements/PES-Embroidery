@@ -9,25 +9,25 @@ class StitchLevel:
     def __init__(self, lines, infLine):
         self.lines = lines
         self.infLine = infLine
-        self.barriers = []
+        #self.barriers = []
 
         # Make barriers out of the spaces between the lines
-        numBarriers = len(lines) - 1
-        for x in range(0, numBarriers):
-            p1 = self.lines[x].end
-            p2 = self.lines[x+1].start
-            b = Line(start=p1, end=p2)
-            #GenericRenderer.globalRenderer.addLine(b, 55, 55, 55)
-            # Rotate line around center
-            invertedB = invertLine(b)
-            self.barriers.append(invertedB)
+        # numBarriers = len(lines) - 1
+        # for x in range(0, numBarriers):
+        #     p1 = self.lines[x].end
+        #     p2 = self.lines[x+1].start
+        #     b = Line(start=p1, end=p2)
+        #     #GenericRenderer.globalRenderer.addLine(b, 55, 55, 55)
+        #     # Rotate line around center
+        #     invertedB = invertLine(b)
+        #     self.barriers.append(invertedB)
 
             #GenericRenderer.globalRenderer.addLine(invertLine(b, scale = 1), 55, 0, 255)
 
-    def lineFallsInValidProjection(self, line):
+    def lineFallsInValidProjectionOfUngroupedLine(self, line, ungroupedLine):
         # Project the line onto the intersection line
         pLine = projectLineOntoInfLine(line, self.infLine)
-        GenericRenderer.globalRenderer.addLine(pLine, 255, 0, 255)
+        #GenericRenderer.globalRenderer.addLine(pLine, 255, 0, 255)
         ipLine = invertLine(pLine)
 
         # # Avoid rounding errors by doing this with two
@@ -41,27 +41,27 @@ class StitchLevel:
         # l2.matchLine(ipLine)
         # l2.moveToIncludePoint(pLine.end)
         # l2 = l2.to_svg_Line(pLine.end, 1)
+        l = ungroupedLine
 
-        for l in self.lines:
-            lLength = l.length()
-            pLength = pLine.length()
-            maxDist = max(lLength, pLength)
+        lLength = l.length()
+        pLength = pLine.length()
+        maxDist = max(lLength, pLength)
 
-            # For a line to be valid with another line,
-            #  the two points of one line can't be farther
-            #  than maxDist more than once.
-            dists = [Line(l.start, pLine.start).length(),
-                     Line(l.start, pLine.end).length(),
-                     Line(l.end, pLine.start).length(),
-                     Line(l.end, pLine.end).length()]
+        # For a line to be valid with another line,
+        #  the two points of one line can't be farther
+        #  than maxDist more than once.
+        dists = [Line(l.start, pLine.start).length(),
+                 Line(l.start, pLine.end).length(),
+                 Line(l.end, pLine.start).length(),
+                 Line(l.end, pLine.end).length()]
 
-            total = 0
-            for d in dists:
-                if d > maxDist:
-                    total += 1
+        totalTooFar = 0
+        for d in dists:
+            if d > maxDist:
+                totalTooFar += 1
 
-            if total <= 1:
-                return True
+        if totalTooFar <= 1:
+            return True
 
         return False
 
@@ -158,7 +158,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
         # Get a new (infinite) line using the point at the current t value
         #  as the center
         center = intersectionPath.point((tIncrementAmount * x) / pathLength)
-        GenericRenderer.globalRenderer.addPoint(center, 255, 255, 0)
+        #GenericRenderer.globalRenderer.addPoint(center, 255, 255, 0)
         infLine = InfLine(m=slope, center=center)
         # Convert it to a bezier line
         l = infLine.to_svg_Line(center=center, length=intersectionLineLength)
@@ -188,7 +188,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
         if debug:
             #print("{} intersection points for this iteration.".format(len(intersectionPoints)))
             for i in intersectionPoints:
-                GenericRenderer.globalRenderer.addPoint(i, 255, 0, 255)
+                None#GenericRenderer.globalRenderer.addPoint(i, 255, 0, 255)
 
         genericColors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255), (255, 255, 0), (255, 0, 255)]
 
@@ -248,6 +248,7 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
             newUsedGroups = []
 
             # Check each ungrouped line in the level
+            level.lines.reverse()
             for ungroupedLine in level.lines:
                 # Remove lines that are super short
                 # TODO: Find a good value for this.
@@ -258,10 +259,9 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
                 foundGroup = None
                 for lineGroup in lastUsedGroups:
                     lastLine = lineGroup[-1]
-                    # Is the start of this line near the end of the last one?
-                    #if endWithinStart(lastLine, ungroupedLine, maxDist):
+
                     # Does it cross a barrier?
-                    if level.lineFallsInValidProjection( lastLine ):
+                    if level.lineFallsInValidProjectionOfUngroupedLine( lastLine, ungroupedLine ):
                         foundGroup = lineGroup
                         break
 
@@ -276,12 +276,24 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
                 foundGroup.append(ungroupedLine)
 
                 newUsedGroups.append(foundGroup)
+                # This group found a member. It's off the table
+                #  for the rest of this iteration.
                 if foundGroup in lastUsedGroups:
                     lastUsedGroups.remove(foundGroup)
 
             lastUsedGroups = newUsedGroups
 
         print("Made {} groups for a shape.".format(len(lineGroups)))
+
+    GenericRenderer.globalRenderer.clearAll()
+    curColor = 0
+    for lineGroups in shapeLineGroups:
+        for lineGroup in lineGroups:
+            curColor += 1
+            currentColor = PES.colors[curColor % len(PES.colors)]
+            for line in lineGroup:
+                GenericRenderer.globalRenderer.addLine(line, currentColor[1], currentColor[2], currentColor[3])
+
 
     # Add color change, convert lines to stitches and add jump commands
     allStitches = []
@@ -336,6 +348,6 @@ def renderPECCommands(PECCommands):
         if isinstance(command, ColorChange):
             None
             #currentColor = PES.colors[command.colorIndex]
-    #
-    # for jump in jumps:
-    #     GenericRenderer.globalRenderer.addLine(jump, 255, 255, 255)
+
+    for jump in jumps:
+        GenericRenderer.globalRenderer.addLine(jump, 255, 255, 255)

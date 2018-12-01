@@ -26,7 +26,7 @@ paths, attributes = svg
 if paths is None:
     sys.exit(0)
 
-threadWidth = 4
+threadWidth = 3
 
 # Enumerate the shapes in the SVG to find where stitches should go.
 levelGroups = []
@@ -47,7 +47,7 @@ for i, shape in enumerate(paths):
 PECCommands = createStitchRoutine(levelGroups, fillColors=fillColors, threadWidth=threadWidth)
 
 # Render the PEC commands
-renderPECCommands(PECCommands)
+#renderPECCommands(PECCommands)
 
 pes = PES(PECCommands=PECCommands)
 pes.encode()
