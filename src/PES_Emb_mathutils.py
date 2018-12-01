@@ -1,12 +1,14 @@
 from svgpathtools import Line
 import math
 import numpy
+from sys import float_info
 
 # Represents your average y = mx + b line
 class InfLine:
     def __init__(self, m, center):
         self.m = m
         self.center = center
+        # Calculate b such that the line includes the point `center`
         self.b = center.imag - (center.real * m)
 
     def x_for_y(self, y):
@@ -23,7 +25,33 @@ class InfLine:
 
             self.m = m2
             self.b = b2
+    def matchInfLine(self, infLine):
+        self.b = infLine.b
+        self.m = infLine.m
+        self.center = complex(infLine.center.real, infLine.center.imag)
 
+    def matchLine(self, line):
+        dx = line.start.real - line.end.real
+        if dx == 0:
+            self.m = float_info.max
+        else:
+            dy = line.start.imag - line.end.imag
+            self.m = dy / dx
+
+        self.center = line.point(0.5)
+        self.b = self.center.imag - (self.center.real * self.m)
+
+    def moveToIncludePoint(self, point):
+        self.b = point.imag - (point.real * self.m)
+        self.center = point
+
+    def intersectionPointWithInfLine(self, il):
+        if self.m == il.m:
+            return None
+
+        x = (il.b - self.b) / (self.m - il.m)
+        y = self.y_for_x(x)
+        return complex(x, y)
 
     def to_svg_Line(self, center, length):
         dist = length / 2.0
@@ -69,6 +97,36 @@ def getIntersectionPathFromBox(infLine, left, right, top, bottom):
     else:
         return l1
 
+def invertLine(line, scale=1.0):
+    center = line.point(0.5)
+
+    # Shift to origin
+    p1 = line.start - center
+    p2 = line.end - center
+
+    p1 = complex(p2.imag, p1.real) * scale
+    p2 = complex(p1.imag , p2.real) * scale
+
+    # Shift back
+    p1 = p1 + center
+    p2 = p2 + center
+
+    # "Rotate"
+    rotated = Line(start=p1, end=p2)
+    return rotated
+
+def projectPointOntoInfLine(point, infLine):
+    i = InfLine(1, (0+0j))
+    i.matchInfLine(infLine)
+    i.invertSlope()
+    i.moveToIncludePoint(point)
+
+    return infLine.intersectionPointWithInfLine(i)
+
+
+
+def projectLineOntoInfLine(line, infLine):
+    return Line(start=projectPointOntoInfLine(line.start, infLine), end=projectPointOntoInfLine(line.end, infLine) )
 
 def getDistanceBetweenPoints(p1, p2):
     return math.sqrt( math.pow(p1.real - p2.real, 2) + math.pow(p1.imag - p2.imag, 2) )

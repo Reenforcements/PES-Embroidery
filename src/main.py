@@ -26,8 +26,10 @@ paths, attributes = svg
 if paths is None:
     sys.exit(0)
 
+threadWidth = 4
+
 # Enumerate the shapes in the SVG to find where stitches should go.
-basicLines = []
+levelGroups = []
 fillColors = []
 for i, shape in enumerate(paths):
     fillColor = getColorOfPathAtIndex(attributes,i)
@@ -37,12 +39,12 @@ for i, shape in enumerate(paths):
     print("Closest color: {}".format( PES.getClosestColor(fillColor) ))
 
     # Fill color here is only for debugging.
-    s = makeStitchLines(shape, fillColor, debug=args.debug)
+    levels = makeStitchLevels(shape, fillColor, debug=args.debug, threadWidth=threadWidth)
     # Append the stitches as their own array so we can separate by colors
-    basicLines.append(s)
+    levelGroups.append(levels)
 
 # Make the stitches into a continuous set of commands
-PECCommands = createStitchRoutine(basicLines, fillColors=fillColors, threadWidth=2)
+PECCommands = createStitchRoutine(levelGroups, fillColors=fillColors, threadWidth=threadWidth)
 
 # Render the PEC commands
 renderPECCommands(PECCommands)

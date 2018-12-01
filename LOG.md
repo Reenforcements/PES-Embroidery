@@ -1,4 +1,7 @@
 
+# 11/30
+
+Tried the barrier approach but it didn't solve everything. I think I need to do
 
 # 11/23
 
