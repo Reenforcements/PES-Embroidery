@@ -218,9 +218,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
 def switchPointsInLine(line):
     return Line(start=line.end, end=line.start)
 
-def endWithinStart(l1, l2, dist):
-    p1 = l1.end
-    p2 = l2.start
+def pointWithinPoint(p1, p2, dist):
     return math.sqrt( math.pow(p1.real - p2.real, 2) + math.pow(p1.imag - p2.imag, 2) ) <= dist
 
 # Take all the stitches we created and actually make
@@ -311,16 +309,16 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
             if isinstance(allStitches[-1], Stitch):
                 lastStitch = allStitches[-1]
                 # Is the distance greater than the minimum?
-                if endWithinStart(lastStitch.line, singleLineGroup[0], maxDist) is not True:
+                if pointWithinPoint(lastStitch.point, singleLineGroup[0].start, maxDist) is not True:
                     # Jump to the location of this shape.
-                    jump = Stitch( line=Line(start=lastStitch.line.end,  end=singleLineGroup[0].start) )
+                    jump = Stitch( singleLineGroup[0].start )
                     jump.type = Stitch.TYPE_JUMP
                     allStitches.append(jump)
 
             for singleLine in singleLineGroup:
-                # Do I really need to do two stitches per stitch or just one?
-                # Maybe I can add different modes for this.
-                s = Stitch(singleLine)
+                s = Stitch(singleLine.start)
+                allStitches.append(s)
+                s = Stitch(singleLine.end)
                 allStitches.append(s)
 
     print("Created {} stitches.".format(len(allStitches)))
@@ -330,24 +328,22 @@ def renderPECCommands(PECCommands):
 
     GenericRenderer.globalRenderer.clearAll()
 
+    lastPoint = (0+0j)
     currentColor = ("None", 0,0,0)
-    curIndex = 1
     jumps = []
     for command in PECCommands:
-
-        currentColor = PES.colors[curIndex % len(PES.colors)]
-
         if isinstance(command, Stitch):
             if command.type is Stitch.TYPE_JUMP:
-                jumps.append(command.line)
-                #GenericRenderer.globalRenderer.addLine(command.line, 255, 255, 255)
-                curIndex = curIndex + 1
+                jumps.append(Line(lastPoint, command.point))
             else:
                 # Regular stitch
-                GenericRenderer.globalRenderer.addLine(command.line, currentColor[1], currentColor[2], currentColor[3])
-        if isinstance(command, ColorChange):
-            None
-            #currentColor = PES.colors[command.colorIndex]
+                GenericRenderer.globalRenderer.addLine(Line(lastPoint, command.point), currentColor[1], currentColor[2], currentColor[3])
 
+            lastPoint = command.point
+
+        if isinstance(command, ColorChange):
+            currentColor = PES.colors[command.colorIndex]
+
+    # Render all the jumps on top
     for jump in jumps:
         GenericRenderer.globalRenderer.addLine(jump, 255, 255, 255)

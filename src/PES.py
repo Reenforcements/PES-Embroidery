@@ -8,6 +8,9 @@ def encodeU8(num):
 def encodeU16(num):
     return pack("<H", num)
 
+def encodeS16(num):
+    return pack("<h", num)
+
 def encodeU32(num):
     return pack("<I", num)
 
@@ -112,11 +115,11 @@ class PES:
         cls.colors[closest][2],
         cls.colors[closest][3])
 
-    def __init__(self, PECCommands=[]):
+    def __init__(self, PEC):
         self.magic = "#PES"
         self.version = "0001"
         self.sections = []
-        self.PECCommands = []
+        self.PEC = PEC
 
     def encode(self):
         b = bytearray()
@@ -124,7 +127,9 @@ class PES:
         b.extend(self.version)
         # Save a spot for the PEC offset that we will
         # change later to the actual offset
-        b.extend("0000")
+        b.extend([0x0C, 0x00, 0x00, 0x00])
+
+        self.PEC.encode(b)
 
         # Old code for the PES section
         #  that I decided to try excluding.
@@ -147,9 +152,9 @@ class PES:
         return b
 
 class PEC:
-    def __init__(self, commands=[]):
+    def __init__(self, label, colors, commands):
         self.label = "default"
-        self.numberOfColors = 1
+        self.colors = colors
 
         # Commands include stitches, jumps, and color changes
         self.commands = commands
@@ -163,24 +168,26 @@ class PEC:
         # Lots of values that aren't understood but probably have to be there.
         b.extend([0x20] * 11)
 
-        b.extend(0xFF)
+        b.extend([0xFF])
 
-        b.extend(0x00)
-        b.extend(0xFF)
+        b.extend([0x00])
+        b.extend([0xFF])
 
         # Thumbnail width and height
-        b.extend(6)
-        b.extend(38)
+        b.extend([6])
+        b.extend([38])
 
         b.extend([0x20, 0x20, 0x20, 0x20, 0x64, 0x20, 0x00, 0x20, 0x00, 0x20, 0x20, 0x20])
 
         # Number of colors - 1
-        b.extend((self.numberOfColors - 1) & 0xFF)
-        #TEMP, assign color palette indices
-        for i in self.numberOfColors:
-            b.extend(i & 0xFF)
+        b.extend([ (len(self.colors) - 1) & 0xFF])
+
+        # Write colors indices
+        for c in self.colors:
+            b.extend([c[0] & 0xFF])
+
         # Palette section padding?
-        b.extend([0x20] *  (462 - self.numberOfColors))
+        b.extend([0x20] *  (462 - len(self.colors) ))
 
         # Second section of PEC header
 
@@ -207,7 +214,7 @@ class PEC:
             command.encode(b)
 
         # End of stitch list
-        b.extend(0xFF)
+        b.extend([0xFF])
 
 
 
@@ -240,21 +247,27 @@ class Stitch:
     TYPE_JUMP = 0x9000
     TYPE_TRIM = 0xA000
 
+    lastPoint = (0+0j)
+
     # Initialize a new stitch from the previous location
     #  to the new location.
-    def __init__(self, line):
-        assert(isinstance(line, Line))
-
-        self.line = line
-
-        if self.line.length() < 63.0:
-            self.type = Stitch.TYPE_SHORT
-        else:
-            self.type = Stitch.TYPE_LONG
+    def __init__(self, toPoint):
+        assert(isinstance(toPoint, complex))
+        self.point = toPoint
+        self.type = Stitch.TYPE_LONG
 
 
     def encode(self, b):
-        None
+        self.encodePoint(self.point - Stitch.lastPoint, b)
+        Stitch.lastPoint = self.point
+
+    def encodePoint(self, point, b):
+        self.encodeCoordinate(point.real, b)
+        self.encodeCoordinate(point.imag, b)
+
+    def encodeCoordinate(self, coordinate, b):
+        total = self.type + (int(coordinate) & 0xFFF)
+        b.extend([ ((total & 0xFF00) >> 8), total & 0xFF])
 
     def length(self):
         return self.line.length()
@@ -271,6 +284,6 @@ class ColorChange:
         self.colorIndex = colorIndex
 
     def encode(self, b):
-        b.append(ColorChange.TYPE_COLOR_CHANGE_left)
-        b.append(ColorChange.TYPE_COLOR_CHANGE_right)
-        b.append(self.colorIndex & 0xFF)
+        b.extend([ ColorChange.TYPE_COLOR_CHANGE_left ])
+        b.extend([ ColorChange.TYPE_COLOR_CHANGE_right ])
+        b.extend([ self.colorIndex & 0xFF ])

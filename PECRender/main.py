@@ -12,8 +12,9 @@ window.set_size(1000,1000)
 window.set_location(300, 0)
 pyglet.gl.glClearColor(0.4,0.4,0.4,1)
 
-filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understanding2/tux.pes"
+#filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understanding2/tux.pes"
 #filepath = "/Users/imaustyn/Downloads/Circle embroidery designs/Circle.pes"
+filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
 
 # Global variables
 class Global:
@@ -22,8 +23,8 @@ class Global:
     x = 0
     y = 0
     file = None
-    xScale = 4.0
-    yScale = 4.0
+    xScale = 2.0
+    yScale = 2.0
     xOffset = 500.0
     yOffset = 500.0
     testColors = [(244, 238, 66), (255,255,255), (0,0,0)]
@@ -51,6 +52,7 @@ class Global:
         f = cls.file # type: file
         print(f.read(8))
         PECOffset = struct.unpack("<I", f.read(4))[0]
+        print("Seeking to byte: {}".format(PECOffset))
         f.seek(PECOffset)
         # Skip stuff
         cls.label = f.read(20)
@@ -125,7 +127,7 @@ class Global:
         if (peekByte & 0x80) > 0:
             # Double length
             c = struct.unpack(">H", Global.readBytes(f, 2))[0]
-            print("Beep: {}".format(hex(c)))
+            #print("Beep: {}".format(hex(c)))
 
             # Color change
             if c == 0xFEB0:

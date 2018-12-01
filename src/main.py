@@ -26,14 +26,16 @@ paths, attributes = svg
 if paths is None:
     sys.exit(0)
 
-threadWidth = 3
+threadWidth = 0.5
 
 # Enumerate the shapes in the SVG to find where stitches should go.
 levelGroups = []
 fillColors = []
+PECColors = []
 for i, shape in enumerate(paths):
     fillColor = getColorOfPathAtIndex(attributes,i)
     fillColors.append(fillColor)
+    PECColors.append(PES.getClosestColor(fillColor))
 
     print("Doing shape {} with fill color {}".format(shape, fillColor))
     print("Closest color: {}".format( PES.getClosestColor(fillColor) ))
@@ -47,16 +49,23 @@ for i, shape in enumerate(paths):
 PECCommands = createStitchRoutine(levelGroups, fillColors=fillColors, threadWidth=threadWidth)
 
 # Render the PEC commands
-#renderPECCommands(PECCommands)
+renderPECCommands(PECCommands)
 
-pes = PES(PECCommands=PECCommands)
-pes.encode()
+pec = PEC(label="pec1", colors=PECColors, commands=PECCommands)
+pes = PES(PEC=pec)
+encodedPES = pes.encode()
+
+with open(args.outputFile, "w") as f:
+    f.write(encodedPES)
+
+print("Wrote {} to disk.".format(args.outputFile))
 
 if args.debug:
     loadedPES = pyembroidery.read(args.outputFile)
     if loadedPES is not None:
         print("Generating debug image.")
         pyembroidery.write_png(loadedPES, replaceFilenameAndExtensionFromPath(args.inputFile, "debugPicture", "png"))
+        print("Image written to disk.")
     else:
         print("Couldn't find output file.")
 

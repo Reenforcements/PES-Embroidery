@@ -14,7 +14,7 @@ class GenericRenderer:
         self.lineBatch = pyglet.graphics.Batch()
         self.pointBatch = pyglet.graphics.Batch()
 
-        pyglet.gl.glLineWidth(7)#2
+        pyglet.gl.glLineWidth(2)#2
         pyglet.gl.glPointSize(4)
 
         self.addLine(Line(start=(0+0j), end=(1000+1000j)), 255, 0, 0)
