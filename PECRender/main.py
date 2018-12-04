@@ -14,8 +14,8 @@ pyglet.gl.glClearColor(0.4,0.4,0.4,1)
 
 #filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understanding2/tux.pes"
 #filepath = "/Users/imaustyn/Downloads/Circle embroidery designs/Circle.pes"
-#filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
-filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simpleTry.PES"
+filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
+#filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simpleTry.PES"
 
 # Global variables
 class Global:
@@ -225,6 +225,7 @@ class Global:
 
         print("Peek byte: {:02x}".format(peekByte))
         if (peekByte & 0x80) > 0:
+            print("Long")
             # Double length
             c = struct.unpack(">H", Global.readBytes(f, 2))[0]
             #print("Beep: {}".format(hex(c)))
@@ -243,6 +244,7 @@ class Global:
             c = c_short((c & 0x07FF) + (0xF800 if ((c & 0x0800) > 0) else 0)).value
             return c
         else:
+            print("Short")
             # Single length coordinate
             c = struct.unpack("B", Global.readBytes(f, 1))[0]
 

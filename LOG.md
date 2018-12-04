@@ -1,3 +1,15 @@
+# 12/4
+
+I think the sewing machine might actually follow PES commands and not PEC commands. That's kinda weird, because the PEC commands are supposed to be for the machine and the PES commands for like, desktop embroidery applications. This machine DOES have its own touch screen though, so maybe times have changed.
+
+Ah, well now the design is just showing up as a single little line for some reason. The machine will go back and forth on it until it breaks -_-
+
+I think it's getting caught by the bounds! That's why it goes back and forth against one wall. That's also whhy my embroidered square came out smaller than it should've.
+
+Yep that was it. I don't know whether I should be upset or impressed that they designed their firmware to that level.
+
+I think I also need the short format for most of them otherwise I think it tries to backstitch each time which is too much.
+
 # 12/3
 
 If I write my PES header with TrueSizer's PEC section, the embroidery machine recognizes it. That means I'm not writing the PEC section correctly. Time for some more reverse engineering.

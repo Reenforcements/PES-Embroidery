@@ -1,6 +1,7 @@
 from struct import pack
 from svgpathtools import *
 import math
+import random
 
 def encodeU8(num):
     return pack("<B", int(num))
@@ -138,67 +139,69 @@ class PES:
         b.extend(encodeU16(1))
         b.extend(encodeU16(1))
         # Number of sew segment blocks
-        b.extend(encodeU16(1))
-        b.extend([0xFF, 0xFF, 0x00, 0x00])
+        b.extend(encodeU16(0))
+        #b.extend([0x00, 0x00, 0x00, 0x00])
 
         # CEmbOne section
-        b.extend(encodeU16(7))
-        b.extend("CEmbOne")
-
-        # Standard block geometry
-        left, right, bottom, top = self.shape.bbox()
-        b.extend(encodeS16(left))
-        b.extend(encodeS16(top))
-        b.extend(encodeS16(right))
-        b.extend(encodeS16(bottom))
-        b.extend(encodeS16(left))
-        b.extend(encodeS16(top))
-        b.extend(encodeS16(right))
-        b.extend(encodeS16(bottom))
-
-        b.extend(encodeFloat(1.0))
-        b.extend(encodeFloat(0.0))
-        b.extend(encodeFloat(0.0))
-        b.extend(encodeFloat(1.0))
-        b.extend(encodeFloat(0.0))
-        b.extend(encodeFloat(0.0))
-
-        # Nobody knows what this value is but it's usually 1
-        b.extend(encodeU16(1))
-
-        # Coordinate translation?
-        b.extend(encodeS16(0))
-        b.extend(encodeS16(0))
-
-        # Width/height
-        b.extend(encodeS16(self.PEC.size.real))
-        b.extend(encodeS16(self.PEC.size.imag))
-
-        # Eight zeros for whatever reason
-        b.extend([0,0,0,0,0,0,0,0])
-        # CSewSeg block count (1)
-        b.extend(encodeU16(1))
-
-        # Means that more blocks follow.
-        b.extend([0xFF, 0xFF, 0x00, 0x00])
-
-
-        # CSewSeg
-        b.extend(encodeU16(7))
-        b.extend("CSewSeg")
-        # Encode stitch list
-        b.extend(encodeU16(0))
-        b.extend(encodeU16(1))
-        b.extend(encodeU16(2))
-        Stitch(toPoint=(10+10j)).encodeForCSewSeg(b)
-        Stitch(toPoint=(30 + 30j)).encodeForCSewSeg(b)
-        # Encode color list
-        b.extend(encodeU16(1))
-        b.extend(encodeU16(0))
-        b.extend(encodeU16(5))
-
-        # No more blocks follow
-        b.extend([0x00, 0x00, 0x00, 0x00])
+        # b.extend(encodeU16(7))
+        # b.extend("CEmbOne")
+        #
+        # # Standard block geometry
+        # left, right, bottom, top = self.shape.bbox()
+        # b.extend(encodeS16(left))
+        # b.extend(encodeS16(top))
+        # b.extend(encodeS16(right))
+        # b.extend(encodeS16(bottom))
+        # b.extend(encodeS16(left))
+        # b.extend(encodeS16(top))
+        # b.extend(encodeS16(right))
+        # b.extend(encodeS16(bottom))
+        #
+        # b.extend(encodeFloat(1.0))
+        # b.extend(encodeFloat(0.0))
+        # b.extend(encodeFloat(0.0))
+        # b.extend(encodeFloat(1.0))
+        # b.extend(encodeFloat(0.0))
+        # b.extend(encodeFloat(0.0))
+        #
+        # # Nobody knows what this value is but it's usually 1
+        # b.extend(encodeU16(1))
+        #
+        # # Coordinate translation?
+        # b.extend(encodeS16(0))
+        # b.extend(encodeS16(0))
+        #
+        # # Width/height
+        # b.extend(encodeS16(self.PEC.size.real))
+        # b.extend(encodeS16(self.PEC.size.imag))
+        #
+        # # Eight zeros for whatever reason
+        # b.extend([0,0,0,0,0,0,0,0])
+        # # CSewSeg block count (1)
+        # b.extend(encodeU16(1))
+        #
+        # # Means that more blocks follow.
+        # b.extend([0xFF, 0xFF, 0x00, 0x00])
+        #
+        #
+        # # CSewSeg
+        # b.extend(encodeU16(7))
+        # b.extend("CSewSeg")
+        # # Encode stitch list
+        # b.extend(encodeU16(0))
+        # b.extend(encodeU16(1))
+        # testStitchCount = 100
+        # b.extend(encodeU16(testStitchCount))
+        # for x in range(0, testStitchCount):
+        #     Stitch(toPoint=complex(random.uniform(-100, 100), random.uniform(-100, 100))).encodeForCSewSeg(b)
+        #
+        # # Encode color list
+        # b.extend(encodeU16(1))
+        # b.extend(encodeU16(0))
+        # b.extend(encodeU16(10))
+        #
+        # # No more blocks follow
+        # b.extend([0x00, 0x00, 0x00, 0x00])
 
 
         pecOffset = len(b)
@@ -283,8 +286,10 @@ class PEC:
 
         # Width and height
         print("Width: {} Height: {}".format(self.size.real, self.size.imag))
-        b.extend(encodeS16(self.size.real))
-        b.extend(encodeS16(self.size.imag))
+        # b.extend(encodeS16(self.size.real))
+        # b.extend(encodeS16(self.size.imag))
+        b.extend(encodeS16(1000))
+        b.extend(encodeS16(1000))
 
         b.extend([0xE0, 0x01])
         b.extend([0xB0, 0x01])
@@ -303,7 +308,7 @@ class PEC:
             for x in range(0, len(self.colors)):
                 for r in range(0, self.thumbnailHeight):
                     for p in range(0, self.thumbnailWidth):
-                        b.extend([0x81])
+                        b.extend([0xFF & int(random.uniform(0, 255))])
 
         b[thumbnailMarker:thumbnailMarker+2] = encodeU16(thumbStart - 512 - pecStart)
 
@@ -332,6 +337,7 @@ class CSewSeg:
         None
 
 class Stitch:
+    TYPE_REGULAR = 0xFFFF
     TYPE_SHORT = 0x00
     TYPE_LONG = 0x8000
     TYPE_JUMP = 0x9000
@@ -344,10 +350,19 @@ class Stitch:
     def __init__(self, toPoint):
         assert(isinstance(toPoint, complex))
         self.point = toPoint
-        self.type = Stitch.TYPE_LONG
+        self.type = Stitch.TYPE_REGULAR
 
 
     def encode(self, b):
+        # Decide whether to make long or not.
+        if self.type == Stitch.TYPE_REGULAR:
+            if Line(Stitch.lastPoint, self.point).length() > 63:
+                self.type = Stitch.TYPE_LONG
+                print("Stitch is over 63 units")
+            else:
+                self.type = Stitch.TYPE_SHORT
+                print("Stitch is under 63 units")
+
         self.encodePoint(self.point - Stitch.lastPoint, b)
         Stitch.lastPoint = complex( int(round(self.point.real)), int(round(self.point.imag)))
 
@@ -359,8 +374,13 @@ class Stitch:
         if coordinate > 2047 or coordinate < -2047:
             raise Exception("Coordinate movement too big: {}".format(coordinate))
 
-        total = self.type + ( int(round(coordinate)) & 0xFFF )
-        b.extend([ ((total & 0xFF00) >> 8), total & 0xFF])
+        if self.type == Stitch.TYPE_SHORT:
+            b.extend([ (int(round(coordinate)) & 0x7F) ])
+            print("Shhort")
+        else:
+            total = self.type + ( int(round(coordinate)) & 0xFFF )
+            b.extend([ ((total & 0xFF00) >> 8), total & 0xFF])
+            print("Long")
 
     def encodeForCSewSeg(self, b):
         b.extend(encodeS16(self.point.real))

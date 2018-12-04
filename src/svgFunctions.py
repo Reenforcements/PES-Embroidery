@@ -222,26 +222,29 @@ def pointWithinPoint(p1, p2, dist):
     return math.sqrt( math.pow(p1.real - p2.real, 2) + math.pow(p1.imag - p2.imag, 2) ) <= dist
 
 # Take all the stitches we created and actually make
-#  a continuous set of commands for the machine to follow.
-def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
+#  a continuous set of stitches for the machine to follow
+#  on a per sub-shape basis.
+# This should return a list of sublists, with each sublist
+#  containing an array of continuous stitch lines.
+def createSubshapeLineGroups(subshapeLevelGroups, fillColors, threadWidth=2, maxStitchDistance=10.0):
 
-    maxDist = math.sqrt(2 * math.pow(threadWidth,2))
-
-    shapeLineGroups = []
+    subshapeLineGroups = []
     lastUsedGroups = []
     # For each set of lines corresponding to each SVG shape...
-    for stitchLevels in levelGroups:
+    for subshapeLevels in subshapeLevelGroups:
         # Find an order of lines that works with (relatively) minimum jumping.
         # This requires us to group lines by continuity.
         # Each group is stitchable with no jumps.
         # Jumps will occur between these groups.
+        # This holds lists of lines that can be stitched continuously with no jumping.
         lineGroups = []
         # SVG files can have multiple shapes
         # Hold all the line groups in "shapeLineGroups"
-        shapeLineGroups.append(lineGroups)
+        # This contains a list of lineGroups, one for each subshape.
+        subshapeLineGroups.append(lineGroups)
 
-        # Each level can contain multiple lines and barriers
-        for level in stitchLevels:
+        # Each level can contain multiple lines
+        for level in subshapeLevels:
 
             newUsedGroups = []
 
@@ -283,20 +286,63 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
 
         print("Made {} groups for a shape.".format(len(lineGroups)))
 
-    GenericRenderer.globalRenderer.clearAll()
-    curColor = 0
-    for lineGroups in shapeLineGroups:
+    # Break up the lines into intermediate stitches.
+    # We don't want giant stitches traversing the whole object.
+    # We want little stitches along the way.
+    def breakUpBigStitchLine(l):
+        # Not less than one segment
+        segments = max(1, int( round(l.length() / maxStitchDistance) ) )
+        increment = 1.0 / float(segments)
+        lines = []
+        for x in range(0, segments):
+            p1 = l.point( x*increment )
+            p2 = l.point( min((x+1)*increment, 1.0) )
+            lines.append(Line(start=p1,end=p2))
+        print(lines)
+        return lines
+
+    # Holds groups for every subshape
+    shortenedSubshapeLineGroups = []
+    for lineGroups in subshapeLineGroups:
+        # Holds the groups for a single subshhape
+        shortenedLineGroups = []
+        shortenedSubshapeLineGroups.append(shortenedLineGroups)
         for lineGroup in lineGroups:
-            curColor += 1
-            currentColor = PES.colors[curColor % len(PES.colors)]
+            # Holds shortened lines for a single continuous region
+            shortenedLines = []
+            shortenedLineGroups.append(shortenedLines)
+            lastLine = None
             for line in lineGroup:
-                GenericRenderer.globalRenderer.addLine(line, currentColor[1], currentColor[2], currentColor[3])
+                if lastLine is not None:
+                    # Make a line connecting this line and the previous one.
+                    l = Line(lastLine.end, line.start)
+                    shortenedLines.extend( breakUpBigStitchLine(l) )
+                shortenedLines.extend(breakUpBigStitchLine(line))
+                lastLine = line
 
+        # Render the lines
+        GenericRenderer.globalRenderer.clearAll()
+        curColor = 0
+        for lineGroups in shortenedSubshapeLineGroups:
+            for lineGroup in lineGroups:
+                curColor += 1
+                currentColor = PES.colors[curColor % len(PES.colors)]
+                for line in lineGroup:
+                    # Add slight color variation to be able to see individual stitches.
+                    variation = 50
+                    c1 = min(255, max(0, currentColor[1] + int(round(random.uniform(-variation, variation))) ))
+                    c2 = min(255, max(0, currentColor[2] + int(round(random.uniform(-variation, variation)))))
+                    c3 = min(255, max(0, currentColor[3] + int(round(random.uniform(-variation, variation)))))
+                    GenericRenderer.globalRenderer.addLine(line, c1, c2, c3)
 
+    return shortenedSubshapeLineGroups
+
+def createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth):
     # Add color change, convert lines to stitches and add jump commands
-    allStitches = []
+    PECCommands = []
+    maxDist = math.sqrt(2 * math.pow(threadWidth, 2))
 
-    for i, shapeLineGroup in enumerate(shapeLineGroups):
+    for i, subshapeLineGroup in enumerate(subshapeLineGroups):
         # Create the color change command.
         fillColor = fillColors[i]
         colorData = PES.getClosestColor(fillColor)
@@ -304,27 +350,30 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
         # First color is automatically set.
         if i != 0:
             colorChange = ColorChange(colorIndex=colorData[0], indexInColorList=i )
-            allStitches.append(colorChange)
+            PECCommands.append(colorChange)
 
-        for singleLineGroup in shapeLineGroup:
+        for singleLineGroup in subshapeLineGroup:
             # Was the last command a stitch?
-            if len(allStitches) > 0 and isinstance(allStitches[-1], Stitch):
-                lastStitch = allStitches[-1]
+            if len(PECCommands) > 0 and isinstance(PECCommands[-1], Stitch):
+                lastStitch = PECCommands[-1]
                 # Is the distance greater than the minimum?
                 if pointWithinPoint(lastStitch.point, singleLineGroup[0].start, maxDist) is not True:
                     # Jump to the location of this shape.
                     jump = Stitch( singleLineGroup[0].start )
                     jump.type = Stitch.TYPE_JUMP
-                    allStitches.append(jump)
+                    PECCommands.append(jump)
+
+            if len(singleLineGroup) > 0:
+                PECCommands.append(Stitch(singleLineGroup[0].start))
 
             for singleLine in singleLineGroup:
-                s = Stitch(singleLine.start)
-                allStitches.append(s)
+                # s = Stitch(singleLine.start)
+                # PECCommands.append(s)
                 s = Stitch(singleLine.end)
-                allStitches.append(s)
+                PECCommands.append(s)
 
-    print("Created {} stitches.".format(len(allStitches)))
-    return allStitches
+    print("Created {} PEC commands (most are stitches.)".format(len(PECCommands)))
+    return PECCommands
 
 def renderPEC(pec):
 
