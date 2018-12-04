@@ -1,18 +1,21 @@
 from struct import pack
-from svgpathtools import Line
+from svgpathtools import *
 import math
 
 def encodeU8(num):
-    return pack("<B", num)
+    return pack("<B", int(num))
 
 def encodeU16(num):
-    return pack("<H", num)
+    return pack("<H", int(num))
 
 def encodeS16(num):
-    return pack("<h", num)
+    return pack("<h", int(num))
 
 def encodeU32(num):
-    return pack("<I", num)
+    return pack("<I", int(num))
+
+def encodeFloat(num):
+    return pack("<f", num)
 
 '''
 The EmbroideryDesign class is used to build
@@ -30,7 +33,8 @@ The PES object and all the objects that follow it
 are for easy encoding to the PES format.
 '''
 class PES:
-    colors = [('Prussian Blue', 26, 10, 148),
+    colors = [('None', 0,0,0),
+              ('Prussian Blue', 26, 10, 148),
               ('Blue', 15, 117, 255),
               ('Teal Green', 0, 147, 76),
               ('Corn Flower Blue', 186, 189, 254),
@@ -115,11 +119,12 @@ class PES:
         cls.colors[closest][2],
         cls.colors[closest][3])
 
-    def __init__(self, PEC):
+    def __init__(self, PEC, shape):
         self.magic = "#PES"
         self.version = "0001"
         self.sections = []
         self.PEC = PEC
+        self.shape = shape
 
     def encode(self):
         b = bytearray()
@@ -127,9 +132,79 @@ class PES:
         b.extend(self.version)
         # Save a spot for the PEC offset that we will
         # change later to the actual offset
+        pecOffsetLocation = len(b)
         b.extend([0x0C, 0x00, 0x00, 0x00])
 
+        b.extend(encodeU16(1))
+        b.extend(encodeU16(1))
+        # Number of sew segment blocks
+        b.extend(encodeU16(1))
+        b.extend([0xFF, 0xFF, 0x00, 0x00])
+
+        # CEmbOne section
+        b.extend(encodeU16(7))
+        b.extend("CEmbOne")
+
+        # Standard block geometry
+        left, right, bottom, top = self.shape.bbox()
+        b.extend(encodeS16(left))
+        b.extend(encodeS16(top))
+        b.extend(encodeS16(right))
+        b.extend(encodeS16(bottom))
+        b.extend(encodeS16(left))
+        b.extend(encodeS16(top))
+        b.extend(encodeS16(right))
+        b.extend(encodeS16(bottom))
+
+        b.extend(encodeFloat(1.0))
+        b.extend(encodeFloat(0.0))
+        b.extend(encodeFloat(0.0))
+        b.extend(encodeFloat(1.0))
+        b.extend(encodeFloat(0.0))
+        b.extend(encodeFloat(0.0))
+
+        # Nobody knows what this value is but it's usually 1
+        b.extend(encodeU16(1))
+
+        # Coordinate translation?
+        b.extend(encodeS16(0))
+        b.extend(encodeS16(0))
+
+        # Width/height
+        b.extend(encodeS16(self.PEC.size.real))
+        b.extend(encodeS16(self.PEC.size.imag))
+
+        # Eight zeros for whatever reason
+        b.extend([0,0,0,0,0,0,0,0])
+        # CSewSeg block count (1)
+        b.extend(encodeU16(1))
+
+        # Means that more blocks follow.
+        b.extend([0xFF, 0xFF, 0x00, 0x00])
+
+
+        # CSewSeg
+        b.extend(encodeU16(7))
+        b.extend("CSewSeg")
+        # Encode stitch list
+        b.extend(encodeU16(0))
+        b.extend(encodeU16(1))
+        b.extend(encodeU16(2))
+        Stitch(toPoint=(10+10j)).encodeForCSewSeg(b)
+        Stitch(toPoint=(30 + 30j)).encodeForCSewSeg(b)
+        # Encode color list
+        b.extend(encodeU16(1))
+        b.extend(encodeU16(0))
+        b.extend(encodeU16(5))
+
+        # No more blocks follow
+        b.extend([0x00, 0x00, 0x00, 0x00])
+
+
+        pecOffset = len(b)
         self.PEC.encode(b)
+
+        b[pecOffsetLocation:pecOffsetLocation+4] = encodeU32(pecOffset)
 
         # Old code for the PES section
         #  that I decided to try excluding.
@@ -152,17 +227,22 @@ class PES:
         return b
 
 class PEC:
-    def __init__(self, label, colors, commands):
-        self.label = "default"
+    def __init__(self, label, colors, commands, size):
+        self.label = label
         self.colors = colors
+        self.size = size
 
         # Commands include stitches, jumps, and color changes
         self.commands = commands
+
+        self.thumbnailWidth = 6
+        self.thumbnailHeight = 38
 
 
     def encode(self, b):
         # The label is always 19 bytes
         # "LA:" + name + spaces to make it 19 bytes total + carriage return
+        pecStart = len(b)
         b.extend("LA:" + self.label[:16].ljust(16))
         b.extend("\r")
         # Lots of values that aren't understood but probably have to be there.
@@ -174,8 +254,8 @@ class PEC:
         b.extend([0xFF])
 
         # Thumbnail width and height
-        b.extend([6])
-        b.extend([38])
+        b.extend([self.thumbnailWidth])
+        b.extend([self.thumbnailHeight])
 
         b.extend([0x20, 0x20, 0x20, 0x20, 0x64, 0x20, 0x00, 0x20, 0x00, 0x20, 0x20, 0x20])
 
@@ -187,7 +267,7 @@ class PEC:
             b.extend([c[0] & 0xFF])
 
         # Palette section padding?
-        b.extend([0x20] *  (462 - len(self.colors) ))
+        b.extend([0x20] *  (462 - (len(self.colors) - 1) ))
 
         # Second section of PEC header
 
@@ -195,18 +275,19 @@ class PEC:
 
         # Offset to image thumbnail relative to the beginning of the second section
         # Set to zero for now because we don't know how many stitches we have yet.
+        thumbnailMarker = len(b)
         b.extend([0x00, 0x00])
 
-        b.extend([0x31, 0x00])
-        b.extend([0xF0, 0xFF])
+        b.extend([0x00, 0x31])
+        b.extend([0xFF, 0xF0])
 
         # Width and height
-        # TEMP values
-        b.extend([0x0A, 0x0A])
-        b.extend([0x0A, 0x0A])
+        print("Width: {} Height: {}".format(self.size.real, self.size.imag))
+        b.extend(encodeS16(self.size.real))
+        b.extend(encodeS16(self.size.imag))
 
-        b.extend([0x01, 0xE0])
-        b.extend([0x01, 0xB0])
+        b.extend([0xE0, 0x01])
+        b.extend([0xB0, 0x01])
 
         b.extend([0x00] * 4)
 
@@ -214,8 +295,17 @@ class PEC:
             command.encode(b)
 
         # End of stitch list
-        b.extend([0xFF])
+        b.extend([0xFF, 0, 0, 0, 0])
 
+        # Write the thumbnails
+        thumbStart = len(b)
+        for i in range(0, 2):
+            for x in range(0, len(self.colors)):
+                for r in range(0, self.thumbnailHeight):
+                    for p in range(0, self.thumbnailWidth):
+                        b.extend([0x81])
+
+        b[thumbnailMarker:thumbnailMarker+2] = encodeU16(thumbStart - 512 - pecStart)
 
 
 
@@ -259,15 +349,22 @@ class Stitch:
 
     def encode(self, b):
         self.encodePoint(self.point - Stitch.lastPoint, b)
-        Stitch.lastPoint = self.point
+        Stitch.lastPoint = complex( int(round(self.point.real)), int(round(self.point.imag)))
 
     def encodePoint(self, point, b):
         self.encodeCoordinate(point.real, b)
         self.encodeCoordinate(point.imag, b)
 
     def encodeCoordinate(self, coordinate, b):
-        total = self.type + (int(coordinate) & 0xFFF)
+        if coordinate > 2047 or coordinate < -2047:
+            raise Exception("Coordinate movement too big: {}".format(coordinate))
+
+        total = self.type + ( int(round(coordinate)) & 0xFFF )
         b.extend([ ((total & 0xFF00) >> 8), total & 0xFF])
+
+    def encodeForCSewSeg(self, b):
+        b.extend(encodeS16(self.point.real))
+        b.extend(encodeS16(self.point.imag))
 
     def length(self):
         return self.line.length()
@@ -280,10 +377,11 @@ class ColorChange:
     TYPE_COLOR_CHANGE_left = 0xFE
     TYPE_COLOR_CHANGE_right = 0xB0
 
-    def __init__(self, colorIndex):
+    def __init__(self, colorIndex, indexInColorList):
         self.colorIndex = colorIndex
+        self.indexInColorList = indexInColorList
 
     def encode(self, b):
         b.extend([ ColorChange.TYPE_COLOR_CHANGE_left ])
         b.extend([ ColorChange.TYPE_COLOR_CHANGE_right ])
-        b.extend([ self.colorIndex & 0xFF ])
+        b.extend([ self.indexInColorList & 0xFF ])

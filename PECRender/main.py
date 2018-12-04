@@ -14,10 +14,78 @@ pyglet.gl.glClearColor(0.4,0.4,0.4,1)
 
 #filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understanding2/tux.pes"
 #filepath = "/Users/imaustyn/Downloads/Circle embroidery designs/Circle.pes"
-filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
+#filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
+filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simpleTry.PES"
 
 # Global variables
 class Global:
+    colorLookup = [
+              ('None', 26, 10, 148),
+              ('Prussian Blue', 26, 10, 148),
+              ('Blue', 15, 117, 255),
+              ('Teal Green', 0, 147, 76),
+              ('Corn Flower Blue', 186, 189, 254),
+              ('Red', 236, 0, 0),
+              ('Reddish Brown', 228, 153, 90),
+              ('Magenta', 204, 72, 171),
+              ('Light Lilac', 253, 196, 250),
+              ('Lilac', 221, 132, 205),
+              ('Mint Green', 107, 211, 138),
+              ('Deep Gold', 228, 169, 69),
+              ('Orange', 255, 189, 66),
+              ('Yellow', 255, 230, 0),
+              ('Lime Green', 108, 217, 0),
+              ('Brass', 193, 169, 65),
+              ('Silver', 181, 173, 151),
+              ('Russet Brown', 186, 156, 95),
+              ('Cream Brown', 250, 245, 158),
+              ('Pewter', 128, 128, 128),
+              ('Black', 0, 0, 0),
+              ('Ultramarine', 0, 28, 223),
+              ('Royal Purple', 223, 0, 184),
+              ('Dark Gray', 98, 98, 98),
+              ('Dark Brown', 105, 38, 13),
+              ('Deep Rose', 255, 0, 96),
+              ('Light Brown', 191, 130, 0),
+              ('Salmon Pink', 243, 145, 120),
+              ('Vermilion', 255, 104, 5),
+              ('White', 240, 240, 240),
+              ('Violet', 200, 50, 205),
+              ('Seacrest', 176, 191, 155),
+              ('Sky Blue', 101, 191, 235),
+              ('Pumpkin', 255, 186, 4),
+              ('Cream Yellow', 255, 240, 108),
+              ('Khaki', 254, 202, 21),
+              ('Clay Brown', 243, 129, 1),
+              ('Leaf Green', 55, 169, 35),
+              ('Peacock Blue', 35, 70, 95),
+              ('Gray', 166, 166, 149),
+              ('Warm Gray', 206, 191, 166),
+              ('Dark Olive', 150, 170, 2),
+              ('Linen', 255, 227, 198),
+              ('Pink', 255, 153, 215),
+              ('Deep Green', 0, 112, 4),
+              ('Lavender', 237, 204, 251),
+              ('Wisteria Violet', 192, 137, 216),
+              ('Beige', 231, 217, 180),
+              ('Carmine', 233, 14, 134),
+              ('Amber Red', 207, 104, 41),
+              ('Olive Green', 64, 134, 21),
+              ('Dark Fuchsia', 219, 23, 151),
+              ('Tangerine', 255, 167, 4),
+              ('Light Blue', 185, 255, 255),
+              ('Emerald Green', 34, 137, 39),
+              ('Purple', 182, 18, 205),
+              ('Moss Green', 0, 170, 0),
+              ('Flesh Pink', 254, 169, 220),
+              ('Harvest Gold', 254, 213, 16),
+              ('Electric Blue', 0, 151, 223),
+              ('Lemon Yellow', 255, 255, 132),
+              ('Fresh Green', 207, 231, 116),
+              ('Applique Material', 255, 200, 100),
+              ('Applique Position', 255, 200, 200),
+              ('Applique', 255, 200, 200)]
+
     pauseEmbroidery = False
     batch = pyglet.graphics.Batch()
     x = 0
@@ -57,7 +125,14 @@ class Global:
         # Skip stuff
         cls.label = f.read(20)
         print("Label: {}".format(cls.label))
-        f.read(28)
+        f.read(14)
+
+        # Read thumbnail width and height
+        thumbWidth = struct.unpack("B", f.read(1))[0]
+        thumbHeight = struct.unpack("B", f.read(1))[0]
+        print("Thumbnail dimensions: {} by {}".format(8 * thumbWidth, thumbHeight))
+
+        f.read(12)
         cls.numberOfColors = struct.unpack("B", f.read(1))[0] + 1
         print("Number of colors: {}".format(cls.numberOfColors))
 
@@ -73,8 +148,31 @@ class Global:
         # if blank is not (0,0):
         #     print("nope: {}".format(blank) )
         #     sys.exit(0)
-        f.read(8)
-        width, height = struct.unpack("<HH", f.read(4))
+        f.read(2)
+
+        # Thumbnail offset
+        thumbOffset = struct.unpack("<H", f.read(2))[0] + 512 + PECOffset
+        print("Thumbnail starts at byte {}".format(thumbOffset))
+
+        # Print thumbnail
+        lastPosition = f.tell()
+        f.seek(thumbOffset)
+        for c in range(0, cls.numberOfColors):
+            for row in range(0, thumbHeight):
+                for b in range(0, thumbWidth):
+                    pixels = struct.unpack("B", f.read(1))[0]
+                    for x in range(0, 8):
+                        if ((0x80 >> (7-x)) & pixels) > 0:
+                            c = "1"
+                        else:
+                            c = "0"
+                        sys.stdout.write(c)
+                sys.stdout.write("\n")
+
+        f.seek(lastPosition)
+
+        f.read(4)
+        width, height = struct.unpack("<hh", f.read(4))
         f.read(8)
         print("Width and height of design: {}, {}".format(width, height))
         print("Starting stitches at location: {}".format(f.tell()))
@@ -97,12 +195,12 @@ class Global:
                        (Global.testColors[Global.colorIndex])[2])
 
         # Get the starting point
-        while True:
-            Global.x = Global.getCoordinate(f)
-            Global.y = -Global.getCoordinate(f)
+        #while True:
+        Global.x = Global.getCoordinate(f)
+        Global.y = -Global.getCoordinate(f)
 
-            if Global.x != 0 or Global.y != 0:
-                break
+            #if Global.x != 0 or Global.y != 0:
+            #    break
         print("Starting at coordinates: ({}, {})".format(Global.x, Global.y))
 
 
@@ -119,11 +217,13 @@ class Global:
         if len(peek) is 0 or peek is None:
             return "End"
 
-        if peek == 0xFF:
+        peekByte = struct.unpack("B", peek)[0]
+
+        if (0xFF & peekByte) == 0xFF:
             print("End stitches")
             return "End"
 
-        peekByte = struct.unpack("B", peek)[0]
+        print("Peek byte: {:02x}".format(peekByte))
         if (peekByte & 0x80) > 0:
             # Double length
             c = struct.unpack(">H", Global.readBytes(f, 2))[0]
@@ -171,10 +271,10 @@ class Global:
 
         for i in range(0,stepBy):
             x = cls.getCoordinate(f)
-            if x is None:
+            if x is None or isinstance(x, str):
                 continue
             y = -cls.getCoordinate(f)
-            if y is None:
+            if y is None or isinstance(y, str):
                 continue
 
             if x is "End" or y is "End":
@@ -182,9 +282,9 @@ class Global:
 
             print("({},{})".format(x,y))
             cls.addLine(Global.x, Global.y, Global.x + x, Global.y + y,
-                        (Global.testColors[Global.colorIndex])[0],
-                         (Global.testColors[Global.colorIndex])[1],
-                          (Global.testColors[Global.colorIndex])[2])
+                        (Global.colorLookup[Global.colors[Global.colorIndex]])[1],
+                         (Global.colorLookup[Global.colors[Global.colorIndex]])[2],
+                          (Global.colorLookup[Global.colors[Global.colorIndex]])[3])
 
 
 

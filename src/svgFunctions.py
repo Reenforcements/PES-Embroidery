@@ -301,12 +301,14 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
         fillColor = fillColors[i]
         colorData = PES.getClosestColor(fillColor)
 
-        colorChange = ColorChange(colorIndex=colorData[0])
-        allStitches.append(colorChange)
+        # First color is automatically set.
+        if i != 0:
+            colorChange = ColorChange(colorIndex=colorData[0], indexInColorList=i )
+            allStitches.append(colorChange)
 
         for singleLineGroup in shapeLineGroup:
             # Was the last command a stitch?
-            if isinstance(allStitches[-1], Stitch):
+            if len(allStitches) > 0 and isinstance(allStitches[-1], Stitch):
                 lastStitch = allStitches[-1]
                 # Is the distance greater than the minimum?
                 if pointWithinPoint(lastStitch.point, singleLineGroup[0].start, maxDist) is not True:
@@ -324,12 +326,15 @@ def createStitchRoutine(levelGroups, fillColors, threadWidth=2):
     print("Created {} stitches.".format(len(allStitches)))
     return allStitches
 
-def renderPECCommands(PECCommands):
+def renderPEC(pec):
+
+    PECCommands = pec.commands
+    colors = pec.colors
 
     GenericRenderer.globalRenderer.clearAll()
 
     lastPoint = (0+0j)
-    currentColor = ("None", 0,0,0)
+    currentColor = colors[0][1:]
     jumps = []
     for command in PECCommands:
         if isinstance(command, Stitch):
@@ -342,7 +347,7 @@ def renderPECCommands(PECCommands):
             lastPoint = command.point
 
         if isinstance(command, ColorChange):
-            currentColor = PES.colors[command.colorIndex]
+            currentColor = colors[command.indexInColorList][1:]
 
     # Render all the jumps on top
     for jump in jumps:
