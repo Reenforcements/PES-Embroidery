@@ -245,7 +245,7 @@ def pointWithinPoint(p1, p2, dist):
 #  on a per sub-shape basis.
 # This should return a list of sublists, with each sublist
 #  containing an array of continuous stitch lines.
-def createSubshapeLineGroups(subshapeLevelGroups, fillColors, threadWidth=2, maxStitchDistance=10.0):
+def createSubshapeLineGroups(subshapeLevelGroups, mode, fillColors, threadWidth=2, maxStitchDistance=10.0):
 
     subshapeLineGroups = []
     lastUsedGroups = []
@@ -321,22 +321,54 @@ def createSubshapeLineGroups(subshapeLevelGroups, fillColors, threadWidth=2, max
 
     # Holds groups for every subshape
     shortenedSubshapeLineGroups = []
-    for lineGroups in subshapeLineGroups:
-        # Holds the groups for a single subshhape
-        shortenedLineGroups = []
-        shortenedSubshapeLineGroups.append(shortenedLineGroups)
-        for lineGroup in lineGroups:
-            # Holds shortened lines for a single continuous region
-            shortenedLines = []
-            shortenedLineGroups.append(shortenedLines)
-            lastLine = None
-            for line in lineGroup:
-                if lastLine is not None:
-                    # Make a line connecting this line and the previous one.
-                    l = Line(lastLine.end, line.start)
-                    shortenedLines.extend( breakUpBigStitchLine(l) )
-                shortenedLines.extend(breakUpBigStitchLine(line))
-                lastLine = line
+
+    if mode == "zigzag":
+        for lineGroups in subshapeLineGroups:
+            # Holds the groups for a single subshhape
+            shortenedLineGroups = []
+            shortenedSubshapeLineGroups.append(shortenedLineGroups)
+            for lineGroup in lineGroups:
+                # Holds shortened lines for a single continuous region
+                shortenedLines = []
+                shortenedLineGroups.append(shortenedLines)
+                lastLine = None
+                for line in lineGroup:
+                    if lastLine is not None:
+                        # Make a line connecting this line and the previous one.
+                        l = Line(lastLine.end, line.start)
+                        shortenedLines.extend( breakUpBigStitchLine(l) )
+                    shortenedLines.extend(breakUpBigStitchLine(line))
+                    lastLine = line
+    elif mode == "closest":
+        for lineGroups in subshapeLineGroups:
+            # Holds the groups for a single subshhape
+            shortenedLineGroups = []
+            shortenedSubshapeLineGroups.append(shortenedLineGroups)
+            for lineGroup in lineGroups:
+                # Holds shortened lines for a single continuous region
+                shortenedLines = []
+                shortenedLineGroups.append(shortenedLines)
+                lastLine = None
+                for line in lineGroup:
+                    if lastLine is not None:
+                        # Which point on the next line is closest?
+                        d1 = Line(lastLine.end, line.start).length()
+                        d2 = Line(lastLine.end, line.end).length()
+                        # Make a line connecting this line and the previous one.
+                        if d2 < d1:
+                            # Invert the line
+                            line = Line(line.end, line.start)
+                            l = Line(lastLine.end, line.start)
+                            shortenedLines.extend(breakUpBigStitchLine(l))
+                        else:
+                            l = Line(lastLine.end, line.start)
+                            shortenedLines.extend( breakUpBigStitchLine(l) )
+                    else:
+                        # The first line.
+                        shortenedLines.extend(breakUpBigStitchLine(line))
+
+                    shortenedLines.extend(breakUpBigStitchLine(line))
+                    lastLine = line
 
         # Render the lines
         GenericRenderer.globalRenderer.clearAll()

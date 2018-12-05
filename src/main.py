@@ -48,7 +48,7 @@ for i, shape in enumerate(paths):
 
 # Make the stitches into continuous groups.
 # This also breaks the long stitches up into little ones.
-subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, fillColors=fillColors, threadWidth=threadWidth, maxStitchDistance=maxStitchDistance)
+subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, mode="closest", fillColors=fillColors, threadWidth=threadWidth, maxStitchDistance=maxStitchDistance)
 
 # Creates stitch outlines for each shape
 
