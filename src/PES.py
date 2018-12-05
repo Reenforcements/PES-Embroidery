@@ -237,6 +237,8 @@ class PEC:
 
         # Commands include stitches, jumps, and color changes
         self.commands = commands
+        # First stitch must be a jump stitch.
+        self.commands[0].type = Stitch.TYPE_JUMP
 
         self.thumbnailWidth = 6
         self.thumbnailHeight = 38
@@ -285,7 +287,7 @@ class PEC:
         b.extend([0xFF, 0xF0])
 
         # Width and height
-        print("Width: {} Height: {}".format(self.size.real, self.size.imag))
+        print("PEC has Width: {} Height: {}".format(self.size.real, self.size.imag))
         # b.extend(encodeS16(self.size.real))
         # b.extend(encodeS16(self.size.imag))
         b.extend(encodeS16(1000))
@@ -358,10 +360,8 @@ class Stitch:
         if self.type == Stitch.TYPE_REGULAR:
             if Line(Stitch.lastPoint, self.point).length() > 63:
                 self.type = Stitch.TYPE_LONG
-                print("Stitch is over 63 units")
             else:
                 self.type = Stitch.TYPE_SHORT
-                print("Stitch is under 63 units")
 
         self.encodePoint(self.point - Stitch.lastPoint, b)
         Stitch.lastPoint = complex( int(round(self.point.real)), int(round(self.point.imag)))
@@ -376,11 +376,9 @@ class Stitch:
 
         if self.type == Stitch.TYPE_SHORT:
             b.extend([ (int(round(coordinate)) & 0x7F) ])
-            print("Shhort")
         else:
             total = self.type + ( int(round(coordinate)) & 0xFFF )
             b.extend([ ((total & 0xFF00) >> 8), total & 0xFF])
-            print("Long")
 
     def encodeForCSewSeg(self, b):
         b.extend(encodeS16(self.point.real))

@@ -26,7 +26,8 @@ paths, attributes = svg
 if paths is None:
     sys.exit(0)
 
-threadWidth = 10
+threadWidth = 3
+maxStitchDistance = 10.0
 
 # Enumerate the shapes in the SVG to find where stitches should go.
 subshapeLevelGroups = []
@@ -47,22 +48,21 @@ for i, shape in enumerate(paths):
 
 # Make the stitches into continuous groups.
 # This also breaks the long stitches up into little ones.
-subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, fillColors=fillColors, threadWidth=threadWidth)
+subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, fillColors=fillColors, threadWidth=threadWidth, maxStitchDistance=maxStitchDistance)
 
-#DEBUG [[[Line(0+0j, 300+0j), Line(300+0j, 300+300j), Line(300+300j, 0+300j) , Line(0+300j, 0+0j)]]]
-print(subshapeLineGroups)
-PECCommands = createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth)
+# Creates stitch outlines for each shape
+
+subshapeLineGroups = prependShapeTraces(paths, subshapeLineGroups, maxStitchDistance=maxStitchDistance)
+
+#DEBUG lines: [[[Line(0+0j, 300+0j), Line(300+0j, 300+300j), Line(300+300j, 0+300j) , Line(0+300j, 0+0j)]]]
+PECCommands = createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth, maxStitchDistance=maxStitchDistance)
 
 left, right, bottom, top = shape.bbox()
-
-
-# First stitch must be a jump stitch.
-PECCommands[0].type = Stitch.TYPE_JUMP
 
 pec = PEC(label="simple", colors=PECColors, commands=PECCommands, size=complex(right - left, top - bottom))
 
 # Render the PEC commands
-#renderPEC(pec)
+renderPEC(pec)
 
 pes = PES(PEC=pec, shape=shape)
 encodedPES = pes.encode()

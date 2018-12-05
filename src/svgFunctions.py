@@ -215,6 +215,25 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
 
     return stitchLevels
 
+def prependShapeTraces(shapePaths, subshapeLineGroups, maxStitchDistance=10.0):
+    for i, shape in enumerate(shapePaths):
+        lineGroups = subshapeLineGroups[i]
+
+        print("Shape length: {}".format(shape.length()))
+
+        increment = int( round(shape.length() / maxStitchDistance) )
+        traceLines = []
+        for x in range(0, increment):
+            p1 = shape.point(float(x) / increment)
+            p2 = shape.point(min(float(x + 1) / increment, 1.0))
+            traceLines.append(Line(start=p1, end=p2))
+        lineGroups.insert(0, traceLines)
+
+    return subshapeLineGroups
+
+
+
+
 def switchPointsInLine(line):
     return Line(start=line.end, end=line.start)
 
@@ -298,7 +317,6 @@ def createSubshapeLineGroups(subshapeLevelGroups, fillColors, threadWidth=2, max
             p1 = l.point( x*increment )
             p2 = l.point( min((x+1)*increment, 1.0) )
             lines.append(Line(start=p1,end=p2))
-        print(lines)
         return lines
 
     # Holds groups for every subshape
@@ -337,7 +355,7 @@ def createSubshapeLineGroups(subshapeLevelGroups, fillColors, threadWidth=2, max
 
     return shortenedSubshapeLineGroups
 
-def createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth):
+def createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth, maxStitchDistance):
     # Add color change, convert lines to stitches and add jump commands
     PECCommands = []
     maxDist = math.sqrt(2 * math.pow(threadWidth, 2))
