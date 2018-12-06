@@ -70,8 +70,9 @@ def loadVectorGraphic(filename):
     attributes = None
     try:
         svg, attributes = svgpathtools.svg2paths(filename)
-    except:
+    except Exception as e:
         print("Couldn't load SVG file. Perhaps it doesn't exist?")
+        print(e.message)
 
     return svg, attributes
 

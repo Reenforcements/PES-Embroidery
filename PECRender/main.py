@@ -14,7 +14,7 @@ pyglet.gl.glClearColor(0.4,0.4,0.4,1)
 
 #filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/Understanding2/tux.pes"
 #filepath = "/Users/imaustyn/Downloads/Circle embroidery designs/Circle.pes"
-filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simple.PES"
+filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/ugliestApple.PES"
 #filepath = "/Users/imaustyn/Documents/MiamiUniversity/ECE 487/Project/PES-Embroidery/TestOutput/simpleTry.PES"
 
 # Global variables

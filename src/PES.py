@@ -402,4 +402,4 @@ class ColorChange:
     def encode(self, b):
         b.extend([ ColorChange.TYPE_COLOR_CHANGE_left ])
         b.extend([ ColorChange.TYPE_COLOR_CHANGE_right ])
-        b.extend([ self.indexInColorList & 0xFF ])
+        b.extend([ (self.indexInColorList-1) & 0xFF ])

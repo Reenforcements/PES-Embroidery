@@ -26,7 +26,7 @@ paths, attributes = svg
 if paths is None:
     sys.exit(0)
 
-threadWidth = 3
+threadWidth = 2.5
 maxStitchDistance = 10.0
 
 # Enumerate the shapes in the SVG to find where stitches should go.
