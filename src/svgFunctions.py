@@ -127,9 +127,9 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
     # The path should cross through the center of the bounding-
     #  box square.
     intersectionPath = InfLine(m=slope, center=center)
-    GenericRenderer.globalRenderer.addLine(
-        Line(start=complex(1000, intersectionPath.y_for_x(1000)),
-             end=complex(-1000, intersectionPath.y_for_x(-1000)) ), 0, 255, 0)
+    # GenericRenderer.globalRenderer.addLine(
+    #     Line(start=complex(1000, intersectionPath.y_for_x(1000)),
+    #          end=complex(-1000, intersectionPath.y_for_x(-1000)) ), 0, 255, 0)
     intersectionPath.invertSlope()
     GenericRenderer.globalRenderer.addLine(
         Line(start=complex(1000, intersectionPath.y_for_x(1000)),
@@ -137,7 +137,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
 
     intersectionPath = getIntersectionPathFromBox(intersectionPath, left, right, top, bottom)
 
-    GenericRenderer.globalRenderer.addLine(intersectionPath, 255, 255, 0)
+    #GenericRenderer.globalRenderer.addLine(intersectionPath, 255, 255, 0)
 
     #print("Start and end points: {}, {}".format(p1,p2))
     #intersectionPath = intersectionPath.to_svg_Line(center=center, length=intersectionLineLength)
@@ -163,7 +163,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
         infLine = InfLine(m=slope, center=center)
         # Convert it to a bezier line
         l = infLine.to_svg_Line(center=center, length=intersectionLineLength)
-        #GenericRenderer.globalRenderer.addLine(l, 255, 255, 255)
+        GenericRenderer.globalRenderer.addLine(l, 160, 160, 160)
 
         # Intersect with the shape
         intersections = shape.intersect(l)
@@ -189,7 +189,7 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
         if debug:
             #print("{} intersection points for this iteration.".format(len(intersectionPoints)))
             for i in intersectionPoints:
-                None#GenericRenderer.globalRenderer.addPoint(i, 255, 0, 255)
+                GenericRenderer.globalRenderer.addPoint(i, 255, 0, 255)
 
         genericColors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 255, 255), (255, 255, 0), (255, 0, 255)]
 
@@ -206,10 +206,10 @@ def makeStitchLevels(shape, fillColor=(0,0,0), threadWidth=2, slope=1, debug=Fal
             currentLines.append(stitchLine)
 
             # Draw debug lines
-            if debug:
-                GenericRenderer.globalRenderer.addLine(stitchLine, genericColors[i%6][0], genericColors[i%6][1], genericColors[i%6][2])
-            else:
-                GenericRenderer.globalRenderer.addLine(stitchLine, fillColor[0], fillColor[1], fillColor[2])
+            # if debug:
+            #     GenericRenderer.globalRenderer.addLine(stitchLine, genericColors[i%6][0], genericColors[i%6][1], genericColors[i%6][2])
+            # else:
+            GenericRenderer.globalRenderer.addLine(stitchLine, fillColor[0], fillColor[1], fillColor[2])
 
         stitchLevel = StitchLevel(currentLines, infLine)
         stitchLevels.append(stitchLevel)
@@ -320,6 +320,22 @@ def createSubshapeLineGroups(subshapeLevelGroups, mode, fillColors, threadWidth=
             lines.append(Line(start=p1,end=p2))
         return lines
 
+    # Renders generic line groups
+    # GenericRenderer.globalRenderer.clearAll()
+    # curColor = 0
+    # for lineGroups in subshapeLineGroups:
+    #     for lineGroup in lineGroups:
+    #         curColor += 1
+    #         currentColor = PES.colors[curColor % len(PES.colors)]
+    #         for line in lineGroup:
+    #             # Add slight color variation to be able to see individual stitches.
+    #             variation = 50
+    #             c1 = min(255, max(0, currentColor[1] + int(round(random.uniform(-variation, variation)))))
+    #             c2 = min(255, max(0, currentColor[2] + int(round(random.uniform(-variation, variation)))))
+    #             c3 = min(255, max(0, currentColor[3] + int(round(random.uniform(-variation, variation)))))
+    #             GenericRenderer.globalRenderer.addLine(line, c1, c2, c3)
+    # return subshapeLineGroups
+
     # Holds groups for every subshape
     shortenedSubshapeLineGroups = []
 
@@ -371,20 +387,20 @@ def createSubshapeLineGroups(subshapeLevelGroups, mode, fillColors, threadWidth=
                     shortenedLines.extend(breakUpBigStitchLine(line))
                     lastLine = line
 
-        # Render the lines
-        GenericRenderer.globalRenderer.clearAll()
-        curColor = 0
-        for lineGroups in shortenedSubshapeLineGroups:
-            for lineGroup in lineGroups:
-                curColor += 1
-                currentColor = PES.colors[curColor % len(PES.colors)]
-                for line in lineGroup:
-                    # Add slight color variation to be able to see individual stitches.
-                    variation = 50
-                    c1 = min(255, max(0, currentColor[1] + int(round(random.uniform(-variation, variation))) ))
-                    c2 = min(255, max(0, currentColor[2] + int(round(random.uniform(-variation, variation)))))
-                    c3 = min(255, max(0, currentColor[3] + int(round(random.uniform(-variation, variation)))))
-                    GenericRenderer.globalRenderer.addLine(line, c1, c2, c3)
+    # Render the lines
+    # GenericRenderer.globalRenderer.clearAll()
+    # curColor = 0
+    # for lineGroups in shortenedSubshapeLineGroups:
+    #     for lineGroup in lineGroups:
+    #         curColor += 1
+    #         currentColor = PES.colors[curColor % len(PES.colors)]
+    #         for line in lineGroup:
+    #             # Add slight color variation to be able to see individual stitches.
+    #             variation = 50
+    #             c1 = min(255, max(0, currentColor[1] + int(round(random.uniform(-variation, variation))) ))
+    #             c2 = min(255, max(0, currentColor[2] + int(round(random.uniform(-variation, variation)))))
+    #             c3 = min(255, max(0, currentColor[3] + int(round(random.uniform(-variation, variation)))))
+    #             GenericRenderer.globalRenderer.addLine(line, c1, c2, c3)
 
     return shortenedSubshapeLineGroups
 

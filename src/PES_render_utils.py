@@ -4,12 +4,14 @@ from svgpathtools import Line, CubicBezier, QuadraticBezier, Path
 class GenericRenderer:
     globalRenderer = None
 
-    def __init__(self):
-        # Make a new window to render into
-        self.window = pyglet.window.Window()
-        self.window.set_size(1000, 1000)
-        self.window.set_location(300, 0)
-        pyglet.gl.glClearColor(0.4, 0.4, 0.4, 1)
+    def __init__(self, debug):
+        self.debug = debug
+        if debug:
+            # Make a new window to render into
+            self.window = pyglet.window.Window()
+            self.window.set_size(1000, 1000)
+            self.window.set_location(300, 0)
+            pyglet.gl.glClearColor(0.4, 0.4, 0.4, 1)
 
         self.lineBatch = pyglet.graphics.Batch()
         self.pointBatch = pyglet.graphics.Batch()
@@ -17,7 +19,7 @@ class GenericRenderer:
         pyglet.gl.glLineWidth(2)#2
         pyglet.gl.glPointSize(4)
 
-        self.addLine(Line(start=(0+0j), end=(1000+1000j)), 255, 0, 0)
+        #self.addLine(Line(start=(0+0j), end=(1000+1000j)), 255, 0, 0)
 
         GenericRenderer.globalRenderer = self
 
@@ -49,6 +51,7 @@ class GenericRenderer:
         self.pointBatch.draw()
 
     def runLoop(self):
-        pyglet.clock.schedule_interval(self.updateDisplay, 1 / 30.0)
-        pyglet.app.run()
+        if self.debug:
+            pyglet.clock.schedule_interval(self.updateDisplay, 1 / 30.0)
+            pyglet.app.run()
 

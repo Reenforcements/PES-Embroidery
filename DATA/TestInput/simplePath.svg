@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="svg2"
-   viewBox="0 0 744.09448819 1052.3622047"
-   height="297mm"
    width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="complexPath.svg">
+   sodipodi:docname="simplePath.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,17 +23,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1311"
-     inkscape:window-height="791"
-     id="namedview7"
+     inkscape:window-width="995"
+     inkscape:window-height="681"
+     id="namedview6"
      showgrid="false"
-     inkscape:zoom="0.78623573"
-     inkscape:cx="459.2861"
-     inkscape:cy="601.98685"
+     inkscape:zoom="0.22425739"
+     inkscape:cx="-274.53123"
+     inkscape:cy="526.1811"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="svg2" />
   <defs
      id="defs4" />
   <metadata
@@ -48,11 +48,9 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     id="layer1">
-    <path
-       id="path3336"
-       d="m 192.34017,404.05477 c 0,0 -8.07021,-172.16463 83.39225,-137.19369 91.46245,34.97094 -96.84261,-108.94793 2.69007,-83.39224 99.53267,25.55569 125.08836,80.70217 125.08836,80.70217 0,0 72.63195,103.56778 -2.69007,141.2288 -75.32203,37.66101 -156.0242,147.95398 -190.99514,98.18764 -34.97094,-49.76634 -17.48547,-99.53268 -17.48547,-99.53268 z"
-       style="fill:#0059ff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1" />
-  </g>
+  <path
+     id="path3335"
+     d="m 70.040118,281.6606 c 0,0 566.479412,-208.702945 532.077832,16.05407 C 567.71637,522.47168 70.040118,281.6606 70.040118,281.6606 Z"
+     style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.29343891px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     inkscape:connector-curvature="0" />
 </svg>

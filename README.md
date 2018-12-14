@@ -1,3 +1,22 @@
+# Installation
+
+PES-Embroidery relies on a number of third party libraries:
+
+- numpy
+- svgPathTools
+- pyEmbroidery
+- pyGlet
+
+These libraries can be easily installed using `pip`.
+
+```
+sudo pip install numpy svgpathtools pyembroidery pyglet`
+```
+
+# Usage
+
+
+# Known Issues
 
 
 

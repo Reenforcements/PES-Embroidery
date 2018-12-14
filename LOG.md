@@ -1,3 +1,9 @@
+# 12/5
+
+Intersections seem to fail if the shape is too large and also made of curves? I'm not sure why, but I'm pretty sure it's a bug within the svgPathTools library.
+
+Yeah, I have no idea why it does this. That's okay.
+
 # 12/4
 
 I think the sewing machine might actually follow PES commands and not PEC commands. That's kinda weird, because the PEC commands are supposed to be for the machine and the PES commands for like, desktop embroidery applications. This machine DOES have its own touch screen though, so maybe times have changed.

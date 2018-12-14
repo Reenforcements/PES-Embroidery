@@ -9,25 +9,37 @@ from PES_render_utils import *
 # Argument parsing
 parser = argparse.ArgumentParser(description="Converts an SVG file into a PES embroidery file.")
 
-parser.add_argument("-i", dest="inputFile", type=str, action='store', required=True)
-parser.add_argument("-o", dest="outputFile", type=str, action='store', default="output.PES", required=False)
-parser.add_argument("-d", dest="debug", action='store_true')
+parser.add_argument("-i", dest="inputFile", type=str, action='store', required=True, help="The SVG file to be converted.")
+parser.add_argument("-o", dest="outputFile", type=str, action='store', default="output.PES", required=False, help="The output PES file.")
+parser.add_argument("-t", dest="threadWidth", type=float, action='store', default=2.5, required=False,
+                    help="The thread width to use. This controls how close parallel stitches are to one another.")
+parser.add_argument("-m", dest="maxStitchDistance", type=float, action='store', default=10.0, required=False,
+                    help="The maximum distance the sewing machine can traverse before it has to make a stitch.")
+parser.add_argument("-l", dest="slope", type=float, action='store', default=-1.0, required=False,
+                    help="The slope of the line to use when performing intersections.")
+parser.add_argument("-s", dest="style", nargs=1, choices=["zigzag", "closest"], default=["closest"], action='store',
+                    help="The method uses to attach parallel stitches together.")
+parser.add_argument("--noOutline", dest="noOutline", action='store_true', help="Do not add outline stitches to shapes.")
+
+parser.add_argument("-d", dest="debug", action='store_true', help="Print debug info and show a rendering of the PES in a window.")
+parser.add_argument("-r", dest="debugRendering", action='store_true', help="Generate a debug image next to the output file.")
 
 args = parser.parse_args()
 
-if args.debug:
-    # Create a generic renderer so we can see what's happening
-    renderer = GenericRenderer()
+# Create a generic renderer so we can see what's happening
+# (Only actually creates a window if the debug argument is set.)
+renderer = GenericRenderer(args.debug)
 
 # Load the SVG file from disk
 svg = loadVectorGraphic(args.inputFile)
 paths, attributes = svg
 
 if paths is None:
+    print("SVG contains no paths.")
     sys.exit(0)
 
-threadWidth = 2.5
-maxStitchDistance = 10.0
+threadWidth = args.threadWidth
+maxStitchDistance = args.maxStitchDistance
 
 # Enumerate the shapes in the SVG to find where stitches should go.
 subshapeLevelGroups = []
@@ -42,17 +54,18 @@ for i, shape in enumerate(paths):
     print("Closest color: {}".format( PES.getClosestColor(fillColor) ))
 
     # Fill color here is only for debugging.
-    levels = makeStitchLevels(shape, fillColor, debug=args.debug, threadWidth=threadWidth)
+    levels = makeStitchLevels(shape, fillColor, debug=args.debug, slope=(-args.slope), threadWidth=threadWidth)
     # Append the stitches as their own array so we can separate by colors
     subshapeLevelGroups.append(levels)
 
 # Make the stitches into continuous groups.
 # This also breaks the long stitches up into little ones.
-subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, mode="closest", fillColors=fillColors, threadWidth=threadWidth, maxStitchDistance=maxStitchDistance)
+print("Using stitch style: {}".format(args.style[0]))
+subshapeLineGroups = createSubshapeLineGroups(subshapeLevelGroups, mode=args.style[0], fillColors=fillColors, threadWidth=threadWidth, maxStitchDistance=maxStitchDistance)
 
 # Creates stitch outlines for each shape
-
-subshapeLineGroups = prependShapeTraces(paths, subshapeLineGroups, maxStitchDistance=maxStitchDistance)
+if args.noOutline is not True:
+    subshapeLineGroups = prependShapeTraces(paths, subshapeLineGroups, maxStitchDistance=maxStitchDistance)
 
 #DEBUG lines: [[[Line(0+0j, 300+0j), Line(300+0j, 300+300j), Line(300+300j, 0+300j) , Line(0+300j, 0+0j)]]]
 PECCommands = createPECStitchRoutines(subshapeLineGroups, fillColors, threadWidth, maxStitchDistance=maxStitchDistance)
@@ -72,12 +85,13 @@ with open(args.outputFile, "w") as f:
 
 print("Wrote {} to disk.".format(args.outputFile))
 
-if args.debug:
+if args.debugRendering:
     loadedPES = pyembroidery.read(args.outputFile)
     if loadedPES is not None:
         print("Generating debug image.")
-        pyembroidery.write_png(loadedPES, replaceFilenameAndExtensionFromPath(args.inputFile, "debugPicture", "png"))
-        print("Image written to disk.")
+        debugImagePath = replaceFilenameAndExtensionFromPath(args.outputFile, "debugPicture" + getFilenameAndExtensionFromPath(args.outputFile)[0], "png")
+        pyembroidery.write_png(loadedPES, debugImagePath)
+        print("Image written to disk: {}".format(debugImagePath))
     else:
         print("Couldn't find output file.")
 
