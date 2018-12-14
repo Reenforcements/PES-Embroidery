@@ -3,30 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5af789-e47c-4138-bdb9-8fa765481e1e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/LOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/MyHeaderTSPEC.pes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/TSHeader.PES" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/myTux.pes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/simple.pes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/simpleTS.PES" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/two.PES" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/two.PES backup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestOutput/ugliestApple.pes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/complexPath.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/debugPicture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/debugPictureCorrectRounding.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/debugPictureWrongRounding.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/letterC.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/simplePath.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/test1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/trace1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/tux.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/ugliestApple.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/zigzag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PES_render_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/PES_render_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/svgFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/svgFunctions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,8 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="91" column="142" selection-start-line="91" selection-start-column="142" selection-end-line="91" selection-end-column="142" />
+            <state relative-caret-position="420">
+              <caret line="28" column="56" lean-forward="true" selection-start-line="28" selection-start-column="56" selection-end-line="28" selection-end-column="56" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -103,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="358" column="27" lean-forward="true" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
+              <caret line="358" column="27" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
                 <marker date="1544240663926" expanded="true" signature="143:2224" ph="..." />
@@ -117,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="103" lean-forward="true" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
+            <state relative-caret-position="120">
+              <caret line="8" column="98" lean-forward="true" selection-start-line="8" selection-start-column="98" selection-end-line="8" selection-end-column="98" />
             </state>
           </provider>
         </entry>
@@ -127,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/src/utilities.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -136,7 +113,7 @@
         <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="212">
-              <caret line="35" column="87" lean-forward="true" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
+              <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <marker date="1544812039822" expanded="true" signature="129:130" ph="..." />
@@ -632,7 +609,7 @@
     <entry file="file://$PROJECT_DIR$/src/utilities.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -660,7 +637,7 @@
     <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
-          <caret line="35" column="87" lean-forward="true" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
+          <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <marker date="1544812039822" expanded="true" signature="129:130" ph="..." />
@@ -675,7 +652,7 @@
     <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="358" column="27" lean-forward="true" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
+          <caret line="358" column="27" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <marker date="1544240663926" expanded="true" signature="143:2224" ph="..." />
@@ -687,15 +664,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="103" lean-forward="true" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
+        <state relative-caret-position="120">
+          <caret line="8" column="98" lean-forward="true" selection-start-line="8" selection-start-column="98" selection-end-line="8" selection-end-column="98" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="91" column="142" selection-start-line="91" selection-start-column="142" selection-end-line="91" selection-end-column="142" />
+        <state relative-caret-position="420">
+          <caret line="28" column="56" lean-forward="true" selection-start-line="28" selection-start-column="56" selection-end-line="28" selection-end-column="56" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
