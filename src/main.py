@@ -11,9 +11,9 @@ parser = argparse.ArgumentParser(description="Converts an SVG file into a PES em
 
 parser.add_argument("-i", dest="inputFile", type=str, action='store', required=True, help="The SVG file to be converted.")
 parser.add_argument("-o", dest="outputFile", type=str, action='store', default="output.PES", required=False, help="The output PES file.")
-parser.add_argument("-t", dest="threadWidth", type=float, action='store', default=2.5, required=False,
+parser.add_argument("-t", dest="threadWidth", type=float, action='store', default=1.5, required=False,
                     help="The thread width to use. This controls how close parallel stitches are to one another.")
-parser.add_argument("-m", dest="maxStitchDistance", type=float, action='store', default=10.0, required=False,
+parser.add_argument("-m", dest="maxStitchDistance", type=float, action='store', default=20.0, required=False,
                     help="The maximum distance the sewing machine can traverse before it has to make a stitch.")
 parser.add_argument("-l", dest="slope", type=float, action='store', default=-1.0, required=False,
                     help="The slope of the line to use when performing intersections.")

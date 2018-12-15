@@ -2,6 +2,13 @@
 
 This project is a program for a CAD tool design class (ECE 487) at Miami University. The tool converts .SVG vector graphics to .PES embroidery files that can be used by machines such as the Brother SE600.
 
+# Examples
+
+![Apple](./DATA/Results/apple.jpg)
+![Tree](./DATA/Results/tree.jpg)
+![Droplet](./DATA/Results/droplet.jpg)
+![Zigzag](./DATA/Results/zigzag.jpg)
+
 # Installation
 
 Python is required to run the program.
@@ -31,8 +38,8 @@ For decimal parameters, 10 units are equal to 1mm.
 - `-h` Display parameter help.
 - `-i [path]` The full path of the input SVG file.
 - `-o [path]` The full path of the output PES file.
-- `-t [decimal number]` This will be used as the distance between parallel stitches. Default is 2.5.
-- `-m [decimal number]` This is the max distance the sewing machine will travel between stitches. Default is 10.
+- `-t [decimal number]` This will be used as the distance between parallel stitches. Default is 1.5.
+- `-m [decimal number]` This is the max distance the sewing machine will travel between stitches. Default is 20.
 - `-l [decimal number]` This is the mathematical slope that the stitch lines will have. Default is a slope of 1.
 - `-s ['closest' or 'zigzag']` This is the stitch style for connecting parallel stitch groups. The default is closest.
 - `--noOutline` If this flag is specified, the embroidery design will not contain stitches that outline each shape.
@@ -46,4 +53,14 @@ For decimal parameters, 10 units are equal to 1mm.
 
 # References
 
-Colors for PES version 1 were taken from [here.](https://edutechwiki.unige.ch/en/Embroidery_format_PEC#Stitch)
+General PES/PEC information from [here.](https://github.com/frno7/libpes/wiki/PES-format)
+
+General PES/PEC information and colors for PES version 1 taken from [here.](https://edutechwiki.unige.ch/en/Embroidery_format_PEC#Stitch)
+
+[svgPathTools](https://pypi.org/project/svgpathtools/)
+
+[numpy](https://pypi.org/project/numpy/)
+
+[pyEmbroidery](https://pypi.org/project/pyembroidery/)
+
+Tux embroidery demo file from [here.](https://github.com/t2b/embroidery)

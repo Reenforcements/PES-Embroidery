@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
+\title{SVG to PES CAD Tool}
+\author{Austyn Larkin}
+\date{2018-11-14}
+
+\pdfpagewidth 8.5in
+\pdfpageheight 11in
+
+\begin{document}
+\maketitle
+\section{Intro}
+Home sewing machines are becoming so advanced that some now include the ability to embroider designs onto cloth. Pre-made designs can be selected from the machine's memory or new designs can be downloaded to the machine using a USB flash drive. If a user wants to make their own design, they need to download embroidery software to their desktop computer. However, most embroidery software is very expensive and is not affordable for hobbyists or home users. In this paper, we propose a new CAD tool to convert a common vector shape format (.SVG) to the embroidery format used by machines such as the Brother® SE600 (.PES).
+
+\section{Background}
+
+\subsection{The SVG File Format}
+
+\cite{SVGFormat} describes the SVG file format in detail. An SVG is a scalable vector graphic. It utilizes XML to allow for the description of two-dimensional vector graphics. Although the SVG format can be used to describe a number of common shapes, the only aspect of interest will be the paths. Paths within the SVG format allow for the description of arbitrary vector shapes. These paths are made up of quadratic and cubic Bézier curves. Each test SVG design is exclusively made up of one or more paths. The svgPathTools library \cite{svgpathtools} will be used to read and perform intersections on the test SVG paths. The SVG file format was chosen as it is a common and widely supported. Free software such as Inkscape [4] can export user designs to the SVG format. An example of an SVG can be seen in Figure \ref{apple}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=2in]{SVGExample}
+    \caption{An SVG that contains three separate paths.}
+    \label{apple}
+\end{figure}
+
+\subsection{The PES File Format}
+
+Although the PES file format is proprietary, major parts of the format have been reverse engineered \cite{PESFormat}. The file format is primarily used by Brother and Bernina International machines. The format can be divided by its three major parts: the header, the PES section, and the PEC section.
+
+The header starts with the "magic number" that specifies that the file is a PES file. This is simply the four characters that spell out "\#PES". Four more characters follow after which determine the version number.
+
+The PES section contains higher level stitch information. These include actual stitches that an embroidery machine would make, but later versions allow common shapes to be specified. This portion of the file was largely ignored as it's used by desktop embroidery software and not by the embroidery machine.
+
+The PEC section contains the actual commands and data that the embroidery machine uses to embroider a design. The major aspects are listed as follows: The header contains the thread colors that should be used when embroidering the design. For PES version 1, thread colors are represented as integer indices in a known list of thread colors specific to the format. Each thread color index is listed in the PEC header and will show up on the embroidery machine in the order they should be loaded. The command list is made up of four different command types: short stitch, long stitch, jump stitch, and color change. Short stitches are two bytes. Each byte specifies how far to move in the X and Y directions before making the next stitch. A long stitch is similar, except each axis takes up two bytes. This is to allow for extra movement distance and some bit flags. If the 12th bit is set in a long stitch command, the command is a jump stitch command. This tells the sewing machine to make a loose stitch that can be cut away later. These stitches are necessary so the machine can jump between discontinuous stitch regions in the design. The last command is a color change command. It tells the machine to stop so the user can swap out the thread color before continuing.
+
+\section{Software Description}
+
+The software was written as a command line tool in Python. A number of arguments can be passed to the program. This allows the user to set parameters such as parallel stitch distance and max stitch length. The program takes an SVG file as an input and produces a PES file as an output. The software works by intersecting each path in the SVG shape with an array of parallel lines. From these lines, the software figures out where stitches should go. It then takes these stitches and makes them continuous. It finishes by encoding the stitches in the PES format and saving the file to disk. A much more detailed version of this process is described by Figures \ref{p-1} through \ref{}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3in]{p-1}
+    \caption{}
+    \label{p-1}
+\end{figure}
+
+
+\section{Experimental Setup}
+
+\section{Results}
+
+\section{Conclusion}
+
+\section{Future Ideas}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
