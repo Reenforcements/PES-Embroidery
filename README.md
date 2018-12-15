@@ -4,10 +4,10 @@ This project is a program for a CAD tool design class (ECE 487) at Miami Univers
 
 # Examples
 
-![Apple](./DATA/Results/apple.jpg)
-![Tree](./DATA/Results/tree.jpg)
-![Droplet](./DATA/Results/droplet.jpg)
-![Zigzag](./DATA/Results/zigzag.jpg)
+![Apple](https://github.com/Reenforcements/PES-Embroidery/blob/master/DATA/Results/apple.JPG?raw=true)
+![Tree](https://github.com/Reenforcements/PES-Embroidery/blob/master/DATA/Results/tree.JPG?raw=true)
+![Droplet](https://github.com/Reenforcements/PES-Embroidery/blob/master/DATA/Results/droplet.JPG?raw=true)
+![Zigzag](https://github.com/Reenforcements/PES-Embroidery/blob/master/DATA/Results/zigzag.JPG?raw=true)
 
 # Installation
 
