@@ -2,30 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5af789-e47c-4138-bdb9-8fa765481e1e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePath.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePath.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePathClosest.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePathClosest.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePathZigzag.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPicturesimplePathZigzag.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPicturetree.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPicturetree.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPictureugliestApple.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPictureugliestApple.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/debugPicturezigzag.png" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/debugPicturezigzag.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePath.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePath.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathClosest.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathClosest.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-10.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-10.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-15.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-15.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-20.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-20.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-5.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathD-5.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePathZigzag.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePathZigzag.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePath_1_5.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePath_1_5.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePath_2_5.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePath_2_5.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePath_3_5.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePath_3_5.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/simplePath_4_5.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/simplePath_4_5.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/tree.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/tree.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/ugliestApple.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/ugliestApple.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/TestOutput/zigzag.pes" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/TestOutput/zigzag.pes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/runTests.sh" beforeDir="false" afterPath="$PROJECT_DIR$/DATA/runTests.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/Results/1.5w.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/Results/1.5w_20m.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/Results/2.5w.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/Results/3.5w.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DATA/Results/4.5w.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REPORT/larkina3-final-report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/REPORT/larkina3-final-report.tex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +27,7 @@
     <session id="-1920598427">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="15" />
+          <entry key="project.closed" value="16" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="8" />
@@ -86,11 +68,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -117,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -148,11 +130,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PES.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="201">
-              <caret line="344" column="22" lean-forward="true" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
+              <caret line="344" column="22" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
                 <marker date="1544116240082" expanded="true" signature="149:339" ph="..." />
@@ -203,9 +185,9 @@
       <find>angle</find>
       <find>makeStitchLevels</find>
       <find>slope</find>
-      <find>closest</find>
       <find>mode</find>
       <find>JUMP</find>
+      <find>closest</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -467,7 +449,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27058825" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27058825" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -673,6 +655,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/PES.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="344" column="22" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1544116240082" expanded="true" signature="149:339" ph="..." />
+            <marker date="1544116240082" expanded="true" signature="287:339" ph="..." />
+            <marker date="1544116240082" expanded="true" signature="516:556" ph="..." />
+            <marker date="1544116240082" expanded="true" signature="3450:3456" ph="..." />
+            <marker date="1544116240082" expanded="true" signature="11805:11901" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -689,31 +686,16 @@
     <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PES.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="344" column="22" lean-forward="true" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <marker date="1544116240082" expanded="true" signature="149:339" ph="..." />
-            <marker date="1544116240082" expanded="true" signature="287:339" ph="..." />
-            <marker date="1544116240082" expanded="true" signature="516:556" ph="..." />
-            <marker date="1544116240082" expanded="true" signature="3450:3456" ph="..." />
-            <marker date="1544116240082" expanded="true" signature="11805:11901" ph="..." />
           </folding>
         </state>
       </provider>
