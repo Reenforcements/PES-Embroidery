@@ -11,7 +11,7 @@ This project is a program for a CAD tool design class (ECE 487) at Miami Univers
 
 # Installation
 
-Python is required to run the program.
+Python 2.7 is required to run the program.
 
 PES-Embroidery also relies on a number of third party libraries:
 
