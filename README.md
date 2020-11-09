@@ -29,7 +29,7 @@ sudo pip install numpy svgpathtools pyembroidery pyglet
 # Usage (Requires Python)
 
 ##### Sample command:
-`python -i ./myVectorGraphic.svg -o ./myEmbroideryFile.pes -t 2.5 -d 10 -r -d`
+`python src/main.py -i ./myVectorGraphic.svg -o ./myEmbroideryFile.pes -t 2.5 -d 10 -r -d`
 
 ##### Parameter details:
 
