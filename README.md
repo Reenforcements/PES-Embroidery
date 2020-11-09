@@ -1,3 +1,6 @@
+#### [Presentation.pdf](https://github.com/Reenforcements/PES-Embroidery/blob/master/Presentation.pdf)
+
+#### [Report.pdf](https://github.com/Reenforcements/PES-Embroidery/blob/master/Report.pdf)
 
 
 # What is this?
