@@ -13,7 +13,7 @@ This project is a program for a CAD tool design class (ECE 487) at Miami Univers
 
 # Installation
 
-Python is required to run the program.
+Python 2.7 is required to run the program.
 
 PES-Embroidery also relies on a number of third party libraries:
 
@@ -31,7 +31,7 @@ sudo pip install numpy svgpathtools pyembroidery pyglet
 # Usage (Requires Python)
 
 ##### Sample command:
-`python -i ./myVectorGraphic.svg -o ./myEmbroideryFile.pes -t 2.5 -d 10 -r -d`
+`python src/main.py -i ./myVectorGraphic.svg -o ./myEmbroideryFile.pes -t 2.5 -d 10 -r -d`
 
 ##### Parameter details:
 
