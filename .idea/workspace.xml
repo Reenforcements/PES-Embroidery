@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5af789-e47c-4138-bdb9-8fa765481e1e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/DATA/Results/1.5w.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/Results/1.5w_20m.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/Results/2.5w.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/Results/3.5w.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DATA/Results/4.5w.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/REPORT/larkina3-final-report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/REPORT/larkina3-final-report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,13 +22,14 @@
     <session id="-1920598427">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="16" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.5" value="3" />
           <entry key="project.open.time.6" value="8" />
           <entry key="project.open.time.7" value="3" />
           <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="16" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -68,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
+            <state relative-caret-position="315">
               <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -83,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
+            <state relative-caret-position="5295">
               <caret line="358" column="27" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -91,15 +87,6 @@
                 <marker date="1544240663926" expanded="true" signature="8482:9005" ph="..." />
                 <marker date="1544240663926" expanded="true" signature="9034:9039" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -116,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
+            <state relative-caret-position="510">
               <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -130,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PES.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="344" column="22" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
+            <state relative-caret-position="235">
+              <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
                 <marker date="1544116240082" expanded="true" signature="149:339" ph="..." />
@@ -442,9 +429,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14713065" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15262516" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -599,9 +585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5055">
           <caret line="337" column="4" selection-start-line="337" selection-start-column="4" selection-end-line="337" selection-end-column="4" />
-          <folding>
-            <element signature="e#237#301#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -612,6 +595,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/PES_Emb_mathutils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5295">
+          <caret line="358" column="27" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1544240663926" expanded="true" signature="143:2224" ph="..." />
+            <marker date="1544240663926" expanded="true" signature="8482:9005" ph="..." />
+            <marker date="1544240663926" expanded="true" signature="9034:9039" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/utilities.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -619,30 +639,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PES_Emb_mathutils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-            <marker date="1543625107768" expanded="true" signature="139:2608" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="497:1537" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="755:887" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="1607:2401" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="2659:2735" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="2801:2806" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="2801:4181" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="3323:3324" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="3730:3893" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="3935:4054" ph="..." />
-            <marker date="1543625107768" expanded="true" signature="4091:4181" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PES_render_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
+        <state relative-caret-position="510">
           <caret line="35" column="87" selection-start-line="35" selection-start-column="87" selection-end-line="35" selection-end-column="87" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -657,8 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PES.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="344" column="22" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
+        <state relative-caret-position="235">
+          <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
             <marker date="1544116240082" expanded="true" signature="149:339" ph="..." />
@@ -666,36 +665,6 @@
             <marker date="1544116240082" expanded="true" signature="516:556" ph="..." />
             <marker date="1544116240082" expanded="true" signature="3450:3456" ph="..." />
             <marker date="1544116240082" expanded="true" signature="11805:11901" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/svgFunctions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="358" column="27" selection-start-line="358" selection-start-column="27" selection-end-line="358" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1544240663926" expanded="true" signature="143:2224" ph="..." />
-            <marker date="1544240663926" expanded="true" signature="8482:9005" ph="..." />
-            <marker date="1544240663926" expanded="true" signature="9034:9039" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DATA/runTests.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
